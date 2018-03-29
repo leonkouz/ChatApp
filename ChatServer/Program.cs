@@ -12,11 +12,15 @@ namespace ChatServer
 {
     class Program
     {
-        public static Hashtable clientsList = new Hashtable();
 
         static void Main(string[] args)
         {
-            
+            IPAddress ip = IPAddress.Parse("127.0.0.1");
+            int port = 8888;
+
+
+            Server server = new Server(ip, port);
+            server.Start();
         }
     }
 }

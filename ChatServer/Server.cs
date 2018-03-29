@@ -22,7 +22,7 @@ namespace ChatServer
 
         Socket _listener;
 
-        ManualResetEvent allDone;
+        ManualResetEvent allDone = new ManualResetEvent(false);
 
         /// <summary>
         /// Initialises the server
@@ -57,6 +57,7 @@ namespace ChatServer
 
                     allDone.WaitOne();
                 }
+
                 
             }
             catch(Exception e)
@@ -65,13 +66,55 @@ namespace ChatServer
             }
         }
 
+        /// <summary>
+        /// The accept callback method is called when a new connection request is received on the socket.It is responsible for 
+        /// getting the Socket instance that will handle the connection and handing that Socket off to the thread that will process the request
+        /// </summary>
+        /// <param name="ar"></param>
         private void AcceptCallback(IAsyncResult ar)
         {
-            //The accept callback method is called when a new connection request is received on the socket.It is responsible for 
-            //getting the Socket instance that will handle the connection and handing that Socket off to the thread that will process the request
+            Socket listener = (Socket)ar.AsyncState;
+            Socket handler = listener.EndAccept(ar);
 
-            // Add the callback code here.  
+            // Signal the main thread to continue.  
+            allDone.Set();
+
+            Console.WriteLine(handler.LocalEndPoint + " Connected");
+
+            // Create the state object.  
+            StateObject state = new StateObject();
+            state.WorkSocket = handler;
+            handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
         }
+
+        public static void ReadCallback(IAsyncResult ar)
+        {
+            StateObject state = (StateObject)ar.AsyncState;
+            Socket handler = state.WorkSocket;
+
+            // Read data from the client socket.  
+            int read = handler.EndReceive(ar);
+
+            // Data was read from the client socket.  
+            if (read > 0)
+            {
+                state.Sb.Append(Encoding.ASCII.GetString(state.Buffer, 0, read));
+                handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+            }
+            else
+            {
+                if (state.Sb.Length > 1)
+                {
+                    // All the data has been read from the client;  
+                    // display it on the console.  
+                    string content = state.Sb.ToString();
+                    Console.WriteLine("Read {0} bytes from socket.\n Data : {1}",
+                       content.Length, content);
+                }
+                handler.Close();
+            }
+        }
+
 
 
     }
