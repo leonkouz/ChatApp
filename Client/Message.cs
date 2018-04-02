@@ -32,7 +32,7 @@ namespace Client
             set { _user = value; }
         }
 
-        public static event EventHandler<MessageReceivedEventArgs> MessageReceived;
+        public static event EventHandler<MessageReceivedEventArgs> Received;
 
         public Message(string content, DateTime timeStamp, string user)
         {
@@ -87,7 +87,7 @@ namespace Client
 
         public void OnMessageReceived(MessageReceivedEventArgs e)
         {
-            MessageReceived?.Invoke(this, e);
+            Received?.Invoke(this, e);
         }
     }
 

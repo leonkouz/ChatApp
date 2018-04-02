@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Client
 {
-    public class TcpClient
+    public class ChatClient
     {
         // The port number for the remote device.  
         private const int _port = 54003;
@@ -26,7 +26,7 @@ namespace Client
 
         private Socket _client;
 
-        public TcpClient()
+        public ChatClient()
         {
             _ipHostInfo = Dns.GetHostEntry("192.168.0.24");
             _ipAddress = _ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);

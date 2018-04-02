@@ -57,7 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Message.cs" />
     <Compile Include="StateObject.cs" />
-    <Compile Include="TcpClient.cs" />
+    <Compile Include="ChatClient.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
