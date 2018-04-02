@@ -60,11 +60,7 @@ namespace Client
 
         private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            if (usernameTextbox.Text == "")
-            {
-
-            }
-            else
+            if (usernameTextbox.Text != "")
             {
                 string messageContent = messageEntryTextBox.Text;
                 DateTime timeStamp = DateTime.Now;
