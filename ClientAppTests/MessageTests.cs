@@ -12,12 +12,21 @@ namespace Client.Tests
     public class MessageTests
     {
         [TestMethod()]
-        public void BuildMessageFromTcpStringTest_ShouldSplitTcpStringCorrectly()
+        public void BuildMessageFromTcpStringTest_ShouldSplitOnDelimiterCorrectly()
         {
-            string tcpString = "asdas|/][-02-Apr-18 12:21:19 PM|/][-sadas<EOF>";
+            //String to test
+            string tcpString = "this \\0 is \\0 a \\0 test\002-Apr-18 12:54:43 PM\0testUser<EOF>";
+            DateTime tcpTimeStamp = DateTime.Parse("02-Apr-18 12:54:43 PM");
 
-            Message messaghe = Message.BuildMessageFromTcpString(tcpString);
+            Message message = Message.BuildMessageFromTcpString(tcpString);
 
+            string content = message.Content;
+            DateTime timeStamp = message.TimeStamp;
+            string user = message.User;
+
+            Assert.AreEqual("this \\0 is \\0 a \\0 test", content);
+            Assert.AreEqual(tcpTimeStamp, timeStamp);
+            Assert.AreEqual("testUser<EOF>", user);
         }
     }
 }

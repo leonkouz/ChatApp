@@ -12,7 +12,7 @@ namespace Client
         private DateTime _timeStamp;
         private string _user;
 
-        private static string delimiter = "|/][-"; //random string of characters to prevent which are unlikely to be used in chat.
+        private static string delimiter = "\0"; //this character is used as it cannot be typed by a user
 
         public string Content
         {
@@ -55,7 +55,7 @@ namespace Client
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(Content);
-            sb.Append(delimiter);
+            sb.Append(delimiter); 
             sb.Append(TimeStamp);
             sb.Append(delimiter);
             sb.Append(User);
@@ -65,21 +65,21 @@ namespace Client
 
         public static Message BuildMessageFromTcpString(string tcpString)
         {
-            string[] arr = tcpString.Split(new string[] { delimiter }, StringSplitOptions.None);
+            string[] result = tcpString.Split(new string[] { delimiter }, StringSplitOptions.None);
 
-            string content = arr[0];
+            string content = result[0];
 
             DateTime timeStamp;
             try
             {
-                timeStamp = DateTime.Parse(arr[1]);
+                timeStamp = DateTime.Parse(result[1]);
             }
             catch
             {
                 throw new ArgumentException("Unable to parse string as DateTime");
             }
 
-            string user = arr[2];
+            string user = result[2];
 
             Message message = new Message(content, timeStamp, user);
             return message;
