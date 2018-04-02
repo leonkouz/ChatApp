@@ -5,9 +5,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatServer
+namespace Client
 {
-    class StateObject
+    public class StateObject
     {
         private Socket _workSocket = null;
         private byte[] _buffer = new byte[BufferSize];

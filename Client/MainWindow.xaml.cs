@@ -23,101 +23,56 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        TcpClient _client;
 
-        // The port number for the remote device.  
-        private const int port = 8888;
-
-        // ManualResetEvent instances signal completion.  
-        private static ManualResetEvent connectDone =
-            new ManualResetEvent(false);
-        private static ManualResetEvent sendDone =
-            new ManualResetEvent(false);
-        private static ManualResetEvent receiveDone =
-            new ManualResetEvent(false);
-
-        // The response from the remote device.  
-        private static String response = String.Empty;
+        List<string> chatHistory = new List<string>();
 
         public MainWindow()
         {
             InitializeComponent();
 
             this.Loaded += MainWindow_Loaded;
+            Message.MessageReceived += Message_MessageReceived;
+        }
 
+        private void Message_MessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            chatHistory.Add(e.Content + "\n");
+            this.Dispatcher.Invoke(() =>
+            {
+                string messageLog = null;
+
+                foreach(string str in chatHistory)
+                {
+                    messageLog = messageLog + str + "\n";
+                
+                };
+                messageHistoryTextBlock.Text = messageLog;
+
+            });
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
-            IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
-
-            // Create a TCP/ IP socket.
-             Socket client = new Socket(ipAddress.AddressFamily,
-                 SocketType.Stream, ProtocolType.Tcp);
-
-            // Connect to the remote endpoint.  
-            client.BeginConnect(remoteEP,
-                new AsyncCallback(ConnectCallback), client);
-            connectDone.WaitOne();
-
-            // Send test data to the remote device.  
-            Send(client, "This is a test<EOF>");
-            sendDone.WaitOne();
+            _client = new TcpClient();
+            _client.Connect();
         }
 
-        private static void ConnectCallback(IAsyncResult ar)
+        private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (usernameTextbox.Text == "")
             {
-                // Retrieve the socket from the state object.  
-                Socket client = (Socket)ar.AsyncState;
 
-                // Complete the connection.  
-                client.EndConnect(ar);
-
-                Console.WriteLine("Socket connected to {0}",
-                    client.RemoteEndPoint.ToString());
-
-                // Signal that the connection has been made.  
-                connectDone.Set();
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e.ToString());
+                string messageContent = messageEntryTextBox.Text;
+                DateTime timeStamp = DateTime.Now;
+                string user = usernameTextbox.Text;
+                Message message = new Message(messageContent, timeStamp, user);
+
+                _client.SendMessage(message);
             }
         }
-
-        private static void Send(Socket client, String data)
-        {
-            // Convert the string data to byte data using ASCII encoding.  
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-            // Begin sending the data to the remote device.  
-            client.BeginSend(byteData, 0, byteData.Length, 0,
-                new AsyncCallback(SendCallback), client);
-        }
-
-        private static void SendCallback(IAsyncResult ar)
-        {
-            try
-            {
-                // Retrieve the socket from the state object.  
-                Socket client = (Socket)ar.AsyncState;
-
-                // Complete sending the data to the remote device.  
-                int bytesSent = client.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
-
-                // Signal that all bytes have been sent.  
-                sendDone.Set();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
     }
 }
