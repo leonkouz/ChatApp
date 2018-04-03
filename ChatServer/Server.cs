@@ -99,8 +99,17 @@ namespace ChatServer
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.WorkSocket;
 
-            // Read data from the client socket.  
-            int read = handler.EndReceive(ar);
+            int read = 0;
+            try
+            {
+                // Read data from the client socket. 
+                read = handler.EndReceive(ar);
+            }
+            catch(SocketException e)
+            {
+                //Remove socket from client list
+                clientList.Remove(state.WorkSocket);
+            }
 
             // Data was read from the client socket.  
             if (read > 0)

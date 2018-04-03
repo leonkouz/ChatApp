@@ -10,7 +10,7 @@ namespace Client
     {
         private string _content;
         private DateTime _timeStamp;
-        private string _user;
+        private string _user = ChatClient.UserName;
 
         private static string delimiter = "\0"; //this character is used as it cannot be typed by a user
 
@@ -26,19 +26,12 @@ namespace Client
             set { _timeStamp = value; }
         }
 
-        public string User
-        {
-            get { return _user; }
-            set { _user = value; }
-        }
-
         public static event EventHandler<MessageReceivedEventArgs> Received;
 
-        public Message(string content, DateTime timeStamp, string user)
+        public Message(string content, DateTime timeStamp)
         {
             _content = content;
             _timeStamp = timeStamp;
-            _user = user;
         }
 
         public static MessageReceivedEventArgs BuildMessageReceivedEvent(Message message)
@@ -46,7 +39,6 @@ namespace Client
             MessageReceivedEventArgs args = new MessageReceivedEventArgs();
             args.Content = message.Content;
             args.TimeStamp = message.TimeStamp;
-            args.User = message.User;
 
             return args;
         }
@@ -54,11 +46,11 @@ namespace Client
         public string BuildTcpString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(Content);
+            sb.Append(_content);
             sb.Append(delimiter); 
-            sb.Append(TimeStamp);
+            sb.Append(_timeStamp);
             sb.Append(delimiter);
-            sb.Append(User);
+            sb.Append(_user);
 
             return sb.ToString();
         }
@@ -81,7 +73,7 @@ namespace Client
 
             string user = result[2];
 
-            Message message = new Message(content, timeStamp, user);
+            Message message = new Message(content, timeStamp);
             return message;
         }
 
@@ -95,6 +87,5 @@ namespace Client
     {
         public string Content { get; set; }
         public DateTime TimeStamp { get; set; }
-        public string User { get; set; }
     }
 }

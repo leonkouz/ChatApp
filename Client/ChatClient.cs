@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Client
 {
-    public class ChatClient
+    class ChatClient
     {
         // The port number for the remote device.  
         private const int _port = 54003;
@@ -20,30 +20,36 @@ namespace Client
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
         private static ManualResetEvent receiveDone = new ManualResetEvent(false);
 
-        private IPHostEntry _ipHostInfo;
-        private IPAddress _ipAddress;
-        private IPEndPoint _remoteEP;
+        private static IPHostEntry _ipHostInfo;
+        private static IPAddress _ipAddress;
+        private static IPEndPoint _remoteEP;
 
-        private Socket _client;
+        private static Socket _client;
 
-        public ChatClient()
+        private static string _userName;
+
+        public static string UserName
         {
-            _ipHostInfo = Dns.GetHostEntry("192.168.0.24");
-            _ipAddress = _ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
+            get { return _userName; }
+        }
+
+        public static void Connect(string userName)
+        {
+            _userName = userName;
+
+            _ipHostInfo = Dns.GetHostEntry("10.0.0.158");
+            _ipAddress = IPAddress.Parse("10.0.0.158");//_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
             _remoteEP = new IPEndPoint(_ipAddress, _port);
 
             // Create a TCP/IP socket.
             _client = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-        }
 
-        public void Connect()
-        {
             // Connect to the remote endpoint.  
             _client.BeginConnect(_remoteEP, new AsyncCallback(ConnectCallback), _client);
             connectDone.WaitOne();
         }
 
-        public void SendMessage(Message message)
+        public static void SendMessage(Message message)
         {
             string messageString = message.BuildTcpString();
 
@@ -52,7 +58,7 @@ namespace Client
             sendDone.WaitOne();
         }
 
-        private void ConnectCallback(IAsyncResult ar)
+        private static void ConnectCallback(IAsyncResult ar)
         {
             try
             {
@@ -79,7 +85,7 @@ namespace Client
         /// Begin recieiving data from the specified socket.
         /// </summary>
         /// <param name="client">Socket to begin receiving data from.</param>
-        private void Receive(Socket client)
+        private static void Receive(Socket client)
         {
             try
             {
@@ -95,7 +101,7 @@ namespace Client
             }
         }
 
-        private void ReceiveCallback(IAsyncResult ar)
+        private static void ReceiveCallback(IAsyncResult ar)
         {
             string content = string.Empty;
 
@@ -141,7 +147,7 @@ namespace Client
             }
         }
 
-        private void Send(Socket client, string data)
+        private static void Send(Socket client, string data)
         {
             //Append end of file tag to data
             data = data + "<EOF>";
@@ -153,7 +159,7 @@ namespace Client
             client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), client);
         }
 
-        private void SendCallback(IAsyncResult ar)
+        private static void SendCallback(IAsyncResult ar)
         {
             try
             {

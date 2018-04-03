@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{75CF92
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{DB2F3014-91E2-4114-B20A-8983D2A9F644}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServerUnitTests", "ChatServerUnitTests\ChatServerUnitTests.csproj", "{3771F938-C6FE-47B2-AAEB-8CE0AB22AAF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServerTests", "ChatServerUnitTests\ChatServerTests.csproj", "{3771F938-C6FE-47B2-AAEB-8CE0AB22AAF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientAppTests", "ClientAppTests\ClientAppTests.csproj", "{95850308-7F21-4EFE-8478-BB12A0479488}"
 EndProject

@@ -22,7 +22,7 @@ namespace Client.Tests
 
             string content = message.Content;
             DateTime timeStamp = message.TimeStamp;
-            string user = message.User;
+            string user = "testUser";
 
             Assert.AreEqual("this \\0 is \\0 a \\0 test", content);
             Assert.AreEqual(tcpTimeStamp, timeStamp);

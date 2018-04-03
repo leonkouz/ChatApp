@@ -23,54 +23,26 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        ChatClient _client;
+        private string _user;
 
-        List<string> messageHistory = new List<string>();
-
-        public MainWindow()
+        public MainWindow(string userName)
         {
             InitializeComponent();
 
+            _user = userName;
+
             this.Loaded += MainWindow_Loaded;
-            Message.Received += Message_Received;
-        }
 
-        private void Message_Received(object sender, MessageReceivedEventArgs e)
-        {
-            messageHistory.Add(e.Content + "\n");
-
-            this.Dispatcher.Invoke(() =>
-            {
-                string messageLog = null;
-
-                foreach(string str in messageHistory)
-                {
-                    messageLog = messageLog + str + "\n";
-                
-                };
-
-                messageHistoryTextBlock.Text = messageLog;
-
-            });
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            _client = new ChatClient();
-            _client.Connect();
+            ChatClient.Connect(_user);
         }
 
         private void SendMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            if (usernameTextbox.Text != "")
-            {
-                string messageContent = messageEntryTextBox.Text;
-                DateTime timeStamp = DateTime.Now;
-                string user = usernameTextbox.Text;
-                Message message = new Message(messageContent, timeStamp, user);
-
-                _client.SendMessage(message);
-            }
+            
         }
     }
 }
