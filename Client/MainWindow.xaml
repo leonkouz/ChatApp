@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="419" Width="760">
     <Window.Resources>
+        <!-- Removes the header from a list view -->
         <Style x:Key="noHeaderListView" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
@@ -21,9 +22,8 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="46" Margin="50,291,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="619"/>
-        <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" Margin="50,342,0,0" VerticalAlignment="Top" Width="91"/>
-        <ListView ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="241" Margin="50,34,0,0" VerticalAlignment="Top" Width="493">
+
+        <ListView ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="290" VerticalAlignment="Top" Width="652" Panel.ZIndex="1">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource noHeaderListView}">
                     <GridViewColumn>
@@ -43,12 +43,24 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView HorizontalAlignment="Left" Height="241" Margin="569,34,0,0" VerticalAlignment="Top" Width="100">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Users"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+
+        <Border BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="100" Width="653">
+            <Grid Name="userMessageEntryRegion" Margin="-1,-1,0,0">
+                <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="357" Margin="20 20 0 0"/>
+                <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="400,0,0,49"/>
+            </Grid>
+        </Border>
+
+        <!-- List to display users -->
+        <Grid Name="userListView" HorizontalAlignment="Right" Margin="0 0 0 0" Width="100">
+            <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Users" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
     </Grid>
 </Window>
