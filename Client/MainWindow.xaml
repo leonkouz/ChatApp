@@ -23,7 +23,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ListView ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="290" VerticalAlignment="Top" Width="652" Panel.ZIndex="1">
+        <ListView ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="290" VerticalAlignment="Top" Width="647" Panel.ZIndex="1">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource noHeaderListView}">
                     <GridViewColumn>

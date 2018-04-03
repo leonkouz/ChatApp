@@ -23,6 +23,8 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        //https://www.youtube.com/watch?v=vaeg0Gwzybw
         private string _user;
 
         public MainWindow(string userName)
