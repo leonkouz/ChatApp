@@ -19,16 +19,28 @@ namespace Client
             Message.Received += Message_Received;
         }
 
+        /// <summary>
+        /// Fires each time a message is received from th server
+        /// </summary>
+
         private void Message_Received(object sender, MessageReceivedEventArgs e)
         {
             Message message = new Message(e.Content, e.TimeStamp);
             AddToHistory(message);
         }
+        
+        /// <summary>
+        /// A list of each message received from the server
+        /// </summary>
 
         public IEnumerable<Message> History
         {
             get { return _history; }
         }
+
+        /// <summary>
+        /// Holds the user's message text from the UI
+        /// </summary>
 
         public string UserMessage
         {
@@ -40,10 +52,18 @@ namespace Client
             }
         }
         
+        /// <summary>
+        /// Fires the SendMessage method
+        /// </summary>
+
         public ICommand SendMessageCommand
         {
             get { return new DelegateCommand(SendMessage);}
         }
+
+        /// <summary>
+        /// Sends the users message to the server
+        /// </summary>
 
         private void SendMessage()
         {    
@@ -56,6 +76,11 @@ namespace Client
             ClearTextBox();
         }
 
+        /// <summary>
+        /// Adds the message to the history list
+        /// </summary>
+        /// <param name="message">Message received</param>
+
         private void AddToHistory(Message message)
         {
             App.Current.Dispatcher.Invoke(delegate // <--- HERE
@@ -63,6 +88,10 @@ namespace Client
                 _history.Add(message);
             });
         }
+
+        /// <summary>
+        /// Clears the users message
+        /// </summary>
 
         private void ClearTextBox()
         {
