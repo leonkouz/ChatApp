@@ -60,8 +60,8 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message.cs" />
-    <Compile Include="MessageViewModel.cs" />
-    <Compile Include="ObservableObject.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="StateObject.cs" />
     <Compile Include="ChatClient.cs" />
     <Page Include="LoginWindow.xaml">

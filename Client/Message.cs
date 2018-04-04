@@ -15,11 +15,19 @@ namespace Client
 
         private static string delimiter = "\0"; //this character is used as it cannot be typed by a user
 
+        /// <summary>
+        /// The content of this message
+        /// </summary>
+
         public string Content
         {
             get { return _content; }
             set { _content = value; }
         }
+
+        /// <summary>
+        /// The time this message was sent
+        /// </summary>
 
         public DateTime TimeStamp
         {
@@ -27,13 +35,13 @@ namespace Client
             set { _timeStamp = value; }
         }
 
-        public static event EventHandler<MessageReceivedEventArgs> Received;
-
         public Message(string content, DateTime timeStamp)
         {
             _content = content;
             _timeStamp = timeStamp;
         }
+
+        public static event EventHandler<MessageReceivedEventArgs> Received;
 
         public static MessageReceivedEventArgs BuildMessageReceivedEvent(Message message)
         {

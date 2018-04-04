@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Client
 {
-    public class MessageViewModel : ObservableObject
+    public class MessageViewModel : BaseViewModel
     {
         private readonly ObservableCollection<Message> _history = new ObservableCollection<Message>();
 
@@ -36,6 +36,7 @@ namespace Client
             set
             {
                 _userMessage = value;
+                RaisePropertyChangedEvent(nameof(UserMessage));
             }
         }
         
@@ -57,19 +58,18 @@ namespace Client
 
         private void AddToHistory(Message message)
         {
-            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+            App.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
                 _history.Add(message);
-                RaisePropertyChangedEvent("History");
+                RaisePropertyChangedEvent(nameof(History));
             });
         }
 
         private void ClearTextBox()
         {
-            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+            App.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
-                _userMessage = "";
-                RaisePropertyChangedEvent("UserMessage");
+                UserMessage = "";
             });
         }
     }
