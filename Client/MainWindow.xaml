@@ -19,44 +19,56 @@
         <local:MessageViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="290" VerticalAlignment="Top" Width="647" Panel.ZIndex="1">
-            <ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource noHeaderListView}">
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Path=Content}" TextWrapping="Wrap"/>
-                                    <TextBlock Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Path=TimeStamp}" TextWrapping="NoWrap"/>
-                                </Grid>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <Border BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="100" Width="653">
-            <Grid Name="userMessageEntryRegion" Margin="-1,-1,0,0">
-                <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="357" Margin="20 20 0 0"/>
-                <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="400,0,0,49"/>
-            </Grid>
-        </Border>
+        <!-- Chat Area -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Message display area -->
+            <ListView Grid.Row="0" ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource noHeaderListView}">
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Path=Content}" TextWrapping="Wrap"/>
+                                        <TextBlock Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Path=TimeStamp}" TextWrapping="NoWrap"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+ 
+            <!-- Messag entry area -->
+            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid Name="userMessageEntryRegion" Margin="-1,-1,0,0">
+                    <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="357" Margin="20 20 0 0"/>
+                    <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="401,0,0,56"/>
+                </Grid>
+            </Border>
+            
+        </Grid>
 
         <!-- List to display users -->
-        <Grid Name="userListView" HorizontalAlignment="Right" Margin="0 0 0 0" Width="100">
+        <Grid Name="userListView" Grid.Column="1" HorizontalAlignment="Stretch" >
             <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Users" Width="100"/>
+                        <GridViewColumn Header="Online Users" Width="145"/>
                     </GridView>
                 </ListView.View>
             </ListView>
