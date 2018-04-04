@@ -10,14 +10,20 @@ namespace Client
 {
     public class MessageViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Message> _history = new ObservableCollection<Message>();
-
-        public string _userMessage;
-
         public MessageViewModel()
         {
             Message.Received += Message_Received;
         }
+
+        #region Private Fields
+
+        private readonly ObservableCollection<Message> _history = new ObservableCollection<Message>();
+
+        private string _userMessage;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Fires each time a message is received from th server
@@ -51,7 +57,11 @@ namespace Client
                 RaisePropertyChangedEvent(nameof(UserMessage));
             }
         }
-        
+
+        #endregion
+
+        #region Commands
+
         /// <summary>
         /// Fires the SendMessage method
         /// </summary>
@@ -60,6 +70,8 @@ namespace Client
         {
             get { return new DelegateCommand(SendMessage);}
         }
+
+        #endregion
 
         /// <summary>
         /// Sends the users message to the server
