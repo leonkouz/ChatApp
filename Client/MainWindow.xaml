@@ -20,7 +20,7 @@
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -68,11 +68,10 @@
             <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Online Users" Width="145"/>
+                        <GridViewColumn Header="Online Users" Width="{Binding ElementName=userListView, Path=ActualWidth}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
-
     </Grid>
 </Window>
