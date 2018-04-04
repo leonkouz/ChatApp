@@ -62,8 +62,8 @@
     <Compile Include="Message.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="StateObject.cs" />
-    <Compile Include="ChatClient.cs" />
+    <Compile Include="ChatClient\StateObject.cs" />
+    <Compile Include="ChatClient\Client.cs" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

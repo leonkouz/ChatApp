@@ -61,7 +61,6 @@ namespace Client
             App.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
                 _history.Add(message);
-                RaisePropertyChangedEvent(nameof(History));
             });
         }
 
