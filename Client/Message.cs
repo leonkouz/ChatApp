@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,10 +48,17 @@ namespace Client
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(_content);
-            sb.Append(delimiter); 
+            sb.Append(delimiter);
             sb.Append(_timeStamp);
             sb.Append(delimiter);
             sb.Append(_user);
+
+
+            foreach (var propertyInfo in GetType().GetProperties())
+            {
+                // do stuff here
+            }
+            
 
             return sb.ToString();
         }
