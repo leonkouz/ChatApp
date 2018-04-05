@@ -8,13 +8,13 @@
     <Color x:Key="BackgroundVeryLight">#fafafa</Color>
     <SolidColorBrush x:Key="BackgroundVeryLightBrush" Color="{StaticResource BackgroundVeryLight}"/>
 
-    <Color x:Key="TextColour">#686868</Color>
+    <Color x:Key="Foreground">#686868</Color>
     <SolidColorBrush x:Key="TextColourBrush" Color="{StaticResource TextColour}"/>
 
-    <Color x:Key="TextColourVeryDark">#00000</Color>
+    <Color x:Key="ForegroundVeryDark">#00000</Color>
     <SolidColorBrush x:Key="TextVeryDarkBrush" Color="{StaticResource TextVeryDark}"/>
     
-    <Color x:Key="TextColourLight">#686868</Color>
+    <Color x:Key="ForegroundLight">#686868</Color>
     <SolidColorBrush x:Key="TextColourLightBrush" Color="{StaticResource TextColourLight}"/>
     
 </ResourceDictionary>

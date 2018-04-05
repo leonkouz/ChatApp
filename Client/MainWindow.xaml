@@ -7,73 +7,161 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
+        x:Name="ChatWindow"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="419" Width="760">
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding SendMessageCommand}"/>
+    </Window.InputBindings>
+
+    <!--<Window.DataContext>
+        <local:MessageViewModel/>
+    </Window.DataContext>-->
+
+    <!-- Implements standard window functionality to the window -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            GlassFrameThickness="0" 
+            CornerRadius="0"
+            />
+    </WindowChrome.WindowChrome>
+    
     <Window.Resources>
         <!-- Removes the header from a list view -->
         <Style x:Key="noHeaderListView" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Visibility" Value="Collapsed" />
         </Style>
-    </Window.Resources>
-    <Window.InputBindings>
-        <KeyBinding Key="Enter" Command="{Binding SendMessageCommand}"/>
-    </Window.InputBindings>
-    <Window.DataContext>
-        <local:MessageViewModel/>
-    </Window.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with the dropshadow margin -->
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=5}">
+                            
+                            <!-- Main window outline -->
+                            <Grid>
 
-        <!-- Chat Area -->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <!-- Message display area -->
-            <ListView Grid.Row="0" ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource noHeaderListView}">
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid HorizontalAlignment="Stretch">
+                                <Grid>
+                                    
+                                    <Grid.RowDefinitions>
+                                        
+                                        <!-- Title Bar -->
+                                        <RowDefinition Height="{Binding TitleHeight, FallbackValue=42}" />
+                                        <!-- Drop Shadow -->
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Window Content -->
+                                        <RowDefinition Height="*"/>
+
+                                    </Grid.RowDefinitions>
+                                    
+                                    <!-- Title Bar -->
+                                    <Grid Grid.Column="0" Panel.ZIndex="1">
+                                        
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Path=Content}" TextWrapping="Wrap"/>
-                                        <TextBlock Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Path=TimeStamp}" TextWrapping="NoWrap"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
- 
-            <!-- Messag entry area -->
-            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid Name="userMessageEntryRegion" Margin="-1,-1,0,0">
-                    <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="357" Margin="20 20 0 0"/>
-                    <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="401,0,0,56"/>
-                </Grid>
-            </Border>
-            
-        </Grid>
+                                            
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Title -->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- Window Menu Buttons -->
+                                            <ColumnDefinition Width="Auto"/>
 
-        <!-- List to display users -->
-        <Grid Name="userListView" Grid.Column="1" HorizontalAlignment="Stretch" >
-            <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Online Users" Width="{Binding ElementName=userListView, Path=ActualWidth}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-    </Grid>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Icon -->
+                                        <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
+                                            <Image Source="Images/Icon"/>
+                                        </Button>
+                                        
+                                        
+                                    </Grid>
+
+                                    <Grid Grid.Column="2">
+                                        
+                                        
+                                    </Grid>
+                                          
+                                    
+                                </Grid>
+                                
+                                <!-- Window border with dropshadow -->
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" 
+                                        Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2" />
+                                    </Border.Effect>
+                                    
+                                </Border>
+                                
+                                <!-- The Main window content -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Chat Area -->
+                                    <Grid x:Name="MainChatWindow" Grid.Column="0" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Message display area -->
+                                        <ListView Grid.Row="0" ItemsSource="{Binding History, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                                            <ListView.View>
+                                                <GridView ColumnHeaderContainerStyle="{StaticResource noHeaderListView}">
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <Grid HorizontalAlignment="Stretch">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition/>
+                                                                        <ColumnDefinition/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Path=Content}" TextWrapping="Wrap"/>
+                                                                    <TextBlock Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Path=TimeStamp}" TextWrapping="NoWrap"/>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+
+                                        <!-- Messag entry area -->
+                                        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Grid Name="userMessageEntryRegion" Margin="-1,-1,0,0">
+                                                <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="357" Margin="20 20 0 0"/>
+                                                <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="401,0,0,56"/>
+                                            </Grid>
+                                        </Border>
+
+                                    </Grid>
+
+                                    <!-- List to display users -->
+                                    <Grid Name="userListView" Grid.Column="1" HorizontalAlignment="Stretch" >
+                                        <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn Header="Online Users" Width="{Binding ElementName=userListView, Path=ActualWidth}"/>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+   
+    
+    
 </Window>
