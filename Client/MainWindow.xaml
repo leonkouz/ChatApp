@@ -9,7 +9,7 @@
         AllowsTransparency="True"
         x:Name="ChatWindow"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="419" Width="760">
+        Title="Chat Application" Height="419" Width="760">
 
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding SendMessageCommand}"/>
@@ -76,15 +76,15 @@
                                             <Image Source="Images/Icon"/>
                                         </Button>
                                         
+                                        <!-- Title -->
+                                        <Viewbox Grid.Column="1" Margin="0">
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome Friend'}"/>
+                                        </Viewbox>
+                                        
+                                        
                                         
                                     </Grid>
 
-                                    <Grid Grid.Column="2">
-                                        
-                                        
-                                    </Grid>
-                                          
-                                    
                                 </Grid>
                                 
                                 <!-- Window border with dropshadow -->

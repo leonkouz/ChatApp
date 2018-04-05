@@ -9,12 +9,12 @@
     <SolidColorBrush x:Key="BackgroundVeryLightBrush" Color="{StaticResource BackgroundVeryLight}"/>
 
     <Color x:Key="Foreground">#686868</Color>
-    <SolidColorBrush x:Key="TextColourBrush" Color="{StaticResource TextColour}"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Foreground}"/>
 
-    <Color x:Key="ForegroundVeryDark">#00000</Color>
-    <SolidColorBrush x:Key="TextVeryDarkBrush" Color="{StaticResource TextVeryDark}"/>
+    <Color x:Key="ForegroundVeryDark">#000000</Color>
+    <SolidColorBrush x:Key="ForegroundVeryDarkBrush" Color="{StaticResource ForegroundVeryDark}"/>
     
     <Color x:Key="ForegroundLight">#686868</Color>
-    <SolidColorBrush x:Key="TextColourLightBrush" Color="{StaticResource TextColourLight}"/>
+    <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}"/>
     
 </ResourceDictionary>
