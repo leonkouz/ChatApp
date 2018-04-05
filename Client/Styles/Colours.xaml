@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Client">
+
+    <Color x:Key="BackgroundLight">#efefef</Color>
+    <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}"/>
+
+    <Color x:Key="BackgroundVeryLight">#fafafa</Color>
+    <SolidColorBrush x:Key="BackgroundVeryLightBrush" Color="{StaticResource BackgroundVeryLight}"/>
+
+    <Color x:Key="TextColour">#686868</Color>
+    <SolidColorBrush x:Key="TextColourBrush" Color="{StaticResource TextColour}"/>
+
+    <Color x:Key="TextColourVeryDark">#00000</Color>
+    <SolidColorBrush x:Key="TextVeryDarkBrush" Color="{StaticResource TextVeryDark}"/>
+    
+    <Color x:Key="TextColourLight">#686868</Color>
+    <SolidColorBrush x:Key="TextColourLightBrush" Color="{StaticResource TextColourLight}"/>
+    
+</ResourceDictionary>

@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
         Title="MainWindow" Height="419" Width="760">
     <Window.Resources>
         <!-- Removes the header from a list view -->

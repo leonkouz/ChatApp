@@ -8,6 +8,10 @@ using System.Windows.Input;
 
 namespace Client
 {
+    /// <summary>
+    /// The view model for the messaging section of the MainWindow
+    /// </summary>
+    
     public class MessageViewModel : BaseViewModel
     {
         public MessageViewModel()
