@@ -11,8 +11,7 @@ namespace Client
     /// <summary>
     /// The view model for the messaging section of the MainWindow
     /// </summary>
-    
-    public class MessageViewModel : BaseViewModel
+        public class MessageViewModel : BaseViewModel
     {
         public MessageViewModel()
         {
@@ -32,7 +31,6 @@ namespace Client
         /// <summary>
         /// Fires each time a message is received from th server
         /// </summary>
-
         private void Message_Received(object sender, MessageReceivedEventArgs e)
         {
             Message message = new Message(e.Content, e.TimeStamp);
@@ -42,7 +40,6 @@ namespace Client
         /// <summary>
         /// A list of each message received from the server
         /// </summary>
-
         public IEnumerable<Message> History
         {
             get { return _history; }
@@ -51,7 +48,6 @@ namespace Client
         /// <summary>
         /// Holds the user's message text from the UI
         /// </summary>
-
         public string UserMessage
         {
             get { return _userMessage; }
@@ -69,7 +65,6 @@ namespace Client
         /// <summary>
         /// Fires the SendMessage method
         /// </summary>
-
         public ICommand SendMessageCommand
         {
             get { return new DelegateCommand(SendMessage);}
@@ -80,7 +75,6 @@ namespace Client
         /// <summary>
         /// Sends the users message to the server
         /// </summary>
-
         private void SendMessage()
         {    
             string messageContent = _userMessage;
@@ -96,7 +90,6 @@ namespace Client
         /// Adds the message to the history list
         /// </summary>
         /// <param name="message">Message received</param>
-
         private void AddToHistory(Message message)
         {
             App.Current.Dispatcher.Invoke(delegate // <--- HERE
@@ -108,7 +101,6 @@ namespace Client
         /// <summary>
         /// Clears the users message
         /// </summary>
-
         private void ClearTextBox()
         {
             App.Current.Dispatcher.Invoke(delegate // <--- HERE
