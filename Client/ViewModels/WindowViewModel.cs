@@ -149,27 +149,17 @@ namespace Client.ViewModels
         }
 
         #region Private Helpers
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref Win32Point pt);
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
-        {
-            public Int32 X;
-            public Int32 Y;
-        };
-
+        
         /// <summary>
         /// Gets current mouse position on the screen
         /// </summary>
-        /// <returns></returns>
-        private static Point GetMousePosition()
+        private Point GetMousePosition()
         {
-            Win32Point w32Mouse = new Win32Point();
-            GetCursorPos(ref w32Mouse);
-            return new Point(w32Mouse.X, w32Mouse.Y);
+            // Position of the mouse relative to the window
+            var position = Mouse.GetPosition(_window);
+
+            // Add the window position so its a "ToScreen"
+            return new Point(position.X + _window.Left, position.Y + _window.Top);
         }
 
         #endregion
