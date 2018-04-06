@@ -28,7 +28,7 @@ namespace Client
         {
             if(usernameTextBox.Text != "")
             {
-                MainWindow mainWindow = new MainWindow(usernameTextBox.Text);
+                MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
 
                 this.Close();

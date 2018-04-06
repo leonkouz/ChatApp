@@ -5,10 +5,44 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Client.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="700" d:DesignWidth="700"
       Title="LoginPage">
 
-    <Grid>
+    <Grid Background="{StaticResource ForegroundDarkBlueBrush}">
+        <Grid>
+            <!-- Main Content Scroll -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"
+                    TextBlock.TextAlignment="Center">
+                   
+                    <!-- Login main content white box -->
+                    <Border Background="White"
+                            CornerRadius="10"
+                            Padding="15 50 15 15"
+                            Width="400"
+                            Margin="50 50 50 0"
+                            >
+
+                        <StackPanel>
+                            
+                            <!-- Login header -->
+                            <TextBlock Text="Enter Your Details" 
+                                   FontSize="{StaticResource FontSizeLarge}" 
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   Foreground="{StaticResource ForegroundDarkBlueBrush}"/>
+
+                            <TextBlock/>
+
+                        </StackPanel>
+                    </Border>
+                    
+                </StackPanel>
+
+            </ScrollViewer>
+        </Grid>
+        
         
     </Grid>
 </Page>

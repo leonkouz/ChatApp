@@ -1,5 +1,4 @@
-﻿using Client.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Client
 {
@@ -12,15 +11,15 @@ namespace Client
         //https://www.youtube.com/watch?v=vaeg0Gwzybw
         private string _user;
 
-        public MainWindow(string userName)
+        public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContext = new WindowViewModel(this);
-
-            _user = userName;
+            //_user = userName;
 
             this.Loaded += MainWindow_Loaded;
+
+            this.DataContext = new WindowViewModel(this);
 
         }
 
