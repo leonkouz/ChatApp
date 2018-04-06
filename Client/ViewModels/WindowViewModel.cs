@@ -39,6 +39,16 @@ namespace Client.ViewModels
         #region Public Properties
 
         /// <summary>
+        /// The smallest width the window can be
+        /// </summary>
+        public double WindowMinimumWidth { get; set; } = 400;
+
+        /// <summary>
+        /// The smallest height the window can be
+        /// </summary>
+        public double WindowMinimumHeight { get; set; } = 400;
+
+        /// <summary>
         /// This size of the resize border around the window
         /// </summary>
         public int ResizeBorder { get; set; } = 6;
@@ -47,6 +57,11 @@ namespace Client.ViewModels
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
         public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+
+        /// <summary>
+        /// The padding of the inner content of the main window
+        /// </summary>
+        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder); } }
 
         /// <summary>
         /// The margin around the window to allow for drop shadow
@@ -135,6 +150,9 @@ namespace Client.ViewModels
             MaximiseCommand = new DelegateCommand(() => _window.WindowState ^= WindowState.Maximized);
             CloseCommand = new DelegateCommand(() => _window.Close());
             MenuCommand = new DelegateCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
+
+            //Fix window resize issue
+            var resizer = new WindowResizer(_window);
 
         }
 

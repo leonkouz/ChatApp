@@ -68,6 +68,7 @@
     <Compile Include="ChatClient\StateObject.cs" />
     <Compile Include="ChatClient\Client.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Compile Include="Window\WindowResizer.cs" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
