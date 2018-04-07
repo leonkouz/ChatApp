@@ -25,7 +25,16 @@ namespace Client
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ChatClient.Connect(_user);
+
+            try
+            {
+                ChatClient.Connect(_user);
+            }
+            catch
+            {
+                MessageBox.Show("Was unable to connect to server");
+            }
+            
         }
 
         private void SendMessageButton_Click(object sender, RoutedEventArgs e)

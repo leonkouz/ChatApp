@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         MinWidth="{Binding WindowMinimumWidth}"
         MinHeight="{Binding WindowMinimumHeight}"
-        Title="Chat Application" Height="419" Width="760">
+        Title="Chat Application" Height="600" Width="760">
 
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding SendMessageCommand}"/>
@@ -124,7 +124,7 @@
 
 
     <Grid>
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
+        <Frame Background="{StaticResource ForegroundDarkBlueBrush}" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
     </Grid>
 
 </Window>

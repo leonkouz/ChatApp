@@ -144,6 +144,7 @@ namespace Client
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
+                return;
             }
         }
 
