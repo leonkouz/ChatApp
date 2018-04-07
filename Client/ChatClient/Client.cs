@@ -60,6 +60,7 @@ namespace Client
 
         private static void ConnectCallback(IAsyncResult ar)
         {
+
             try
             {
                 // Retrieve the socket from the state object.  
@@ -75,10 +76,17 @@ namespace Client
 
                 Receive(client);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 MessageBox.Show(e.ToString());
+
+                // Close the socket
+                _client.Close();
+
+                // Indicate that the connection attempt has finished
+                connectDone.Set();
             }
+                
         }
 
         /// <summary>
@@ -87,18 +95,13 @@ namespace Client
         /// <param name="client">Socket to begin receiving data from.</param>
         private static void Receive(Socket client)
         {
-            try
-            {
+            
                 // Create the state object.  
                 StateObject state = new StateObject();
                 state.WorkSocket = client;
 
                 client.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReceiveCallback), state);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
+            
         }
 
         private static void ReceiveCallback(IAsyncResult ar)

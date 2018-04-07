@@ -25,7 +25,7 @@ namespace Client
         /// <summary>
         /// The pages slides out and fades to the left
         /// </summary>
-        SlideandFadeOutToLeft = 2,
+        SlideAndFadeOutToLeft = 2,
 
     }
 }

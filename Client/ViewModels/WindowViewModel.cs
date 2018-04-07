@@ -55,7 +55,6 @@ namespace Client
         /// </summary>
         public bool BeingMoved { get; set; }
 
-
         /// <summary>
         /// True if the window should be borderless because it is docked or maximized
         /// </summary>

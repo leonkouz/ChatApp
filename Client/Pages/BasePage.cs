@@ -24,7 +24,7 @@ namespace Client.Pages
         /// <summary>
         /// The animation to play when the page is unloaded
         /// </summary>
-        public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideandFadeOutToLeft;
+        public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToLeft;
 
         /// <summary>
         /// The time any slide animation takes to complete
@@ -56,11 +56,11 @@ namespace Client.Pages
         private async void BasePage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             //Animate the page in
-           await AnimateIn();
+            await AnimateIn();
         }
 
         /// <summary>
-        /// Anmimates in the page
+        /// Animates the page in 
         /// </summary>
         /// <returns></returns>
         public async Task AnimateIn()
@@ -76,7 +76,28 @@ namespace Client.Pages
                     // Start the animation
                     await this.SlideAndFadeInFromRight(this.SlideSeconds);
 
-                break;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Animates the page out
+        /// </summary>
+        /// <returns></returns>
+        public async Task AnimateOut()
+        {
+            // Make sure we have something to do
+            if (this.PageUnloadAnimation == PageAnimation.None)
+                return;
+
+            switch (this.PageUnloadAnimation)
+            {
+                case PageAnimation.SlideAndFadeOutToLeft:
+
+                    // Start the animation
+                    await this.SlideAndFadeOutToLeft(this.SlideSeconds);
+
+                    break;
             }
         }
 
