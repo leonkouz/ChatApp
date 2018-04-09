@@ -7,13 +7,24 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
-namespace Client.Pages
+namespace Client
 {
     /// <summary>
     /// A base page for all pages to gain base functionality
     /// </summary>
-    public class BasePage : Page
+    public class BasePage<VM> : Page
+        where VM : BaseViewModel, new()
     {
+        #region Private Fields
+
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        private VM _viewModel;
+
+        #endregion
+
+
         #region Public Properties
 
         /// <summary>
@@ -31,6 +42,27 @@ namespace Client.Pages
         /// </summary>
         public float SlideSeconds { get; set; } = 0.8f;
 
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        public VM ViewModel
+        {
+            get { return _viewModel; }
+            set
+            {
+                // IF nothing has changed, return
+                if (_viewModel == value)
+                    return;
+
+                // Update the view model
+                _viewModel = value;
+
+                // Create a default view model
+                this.ViewModel = _viewModel;
+            }
+        }
+
+
         #endregion
 
         /// <summary>
@@ -44,6 +76,8 @@ namespace Client.Pages
 
             // List out for page loaded
             this.Loaded += BasePage_Loaded;
+
+            this.DataContext = new VM();
         }
 
         #region Animation Load / Unload

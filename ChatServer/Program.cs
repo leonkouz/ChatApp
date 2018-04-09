@@ -15,7 +15,7 @@ namespace ChatServer
 
         static void Main(string[] args)
         {
-            IPAddress ip = IPAddress.Parse("192.168.0.24");
+            IPAddress ip = IPAddress.Parse("10.0.0.158");
             int port = 54003;
 
             Server server = new Server(ip, port);
