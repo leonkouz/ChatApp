@@ -14,5 +14,10 @@ namespace Client
     {
         Login = 0,
 
+        /// <summary>
+        /// The main chat page
+        /// </summary>
+        Chat = 1,
+
     }
 }

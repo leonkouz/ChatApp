@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Client"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="600" d:DesignWidth="600"
       Title="GlobalChatPage">
    
 
@@ -49,7 +49,7 @@
             <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid Name="userMessageEntryRegion" Margin="-1,-1,0,0">
                     <TextBox Name="messageEntryTextBox" Text="{Binding UserMessage, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="357" Margin="20 20 0 0"/>
-                    <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="401,0,0,56"/>
+                    <Button Name="sendMessageButton" Command="{Binding SendMessageCommand}"  Content="Send Message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="91" Margin="398,0,0,72"/>
                 </Grid>
             </Border>
 

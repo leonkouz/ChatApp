@@ -18,7 +18,7 @@ namespace Client.Pages
     /// <summary>
     /// Interaction logic for GlobalChatPage.xaml
     /// </summary>
-    public partial class GlobalChatPage : Page
+    public partial class GlobalChatPage : BasePage<LoginViewModel>
     {
         public GlobalChatPage()
         {
