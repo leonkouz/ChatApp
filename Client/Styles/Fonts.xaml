@@ -3,8 +3,9 @@
                     xmlns:local="clr-namespace:Client"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/Lato/#Lato Thin</FontFamily>
-    <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/Lato/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato Thin</FontFamily>
+    <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
 
     <!-- Sets the default font family for controls-->
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">

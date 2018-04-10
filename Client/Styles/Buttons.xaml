@@ -7,6 +7,7 @@
         <!-- Order is important -->
         <ResourceDictionary Source="Colours.xaml"/>
         <ResourceDictionary Source="Fonts.xaml"/>
+        <ResourceDictionary Source="Texts.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Hoverless Button -->
@@ -107,11 +108,11 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                    />
 
-                            <TextBlock
+                            <TextBlock Style="{StaticResource SpinningText}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisiblityConverter}, ConverterParameter=False}"
-                                Text="Busy"/>
+                                />
                         </Grid>
                         
                     </Border>
