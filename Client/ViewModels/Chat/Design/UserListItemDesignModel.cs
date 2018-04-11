@@ -29,7 +29,7 @@ namespace Client
             Initials = "LM";
             Name = "Luke";
             StatusMessage = "This is my status message";
-            Colour = "#ecf6fb";
+            Colour = "3099c5";
         }
     }
 }

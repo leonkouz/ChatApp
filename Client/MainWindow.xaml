@@ -133,6 +133,8 @@
 
         <local:OnlineUsersMenu Grid.Column="1">
 
+            <local:UserListControl/>
+
         </local:OnlineUsersMenu>
         
     </Grid>
