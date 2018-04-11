@@ -21,13 +21,13 @@
                     </Grid.RowDefinitions>
 
                     <!-- Header -->
-                    <Grid Background="{StaticResource ForegroundDarkBlueBrush}">
+                    <Grid Background="{StaticResource ForegroundLightPurpleBrush}">
 
                         <TextBlock 
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource FontSizeLarge}" 
                         FontFamily="{StaticResource LatoRegular}"
-                        Foreground="White"
+                        Foreground="{StaticResource ForegroundDarkBlueBrush}"
                         Text="Online Users" />
 
                     </Grid>

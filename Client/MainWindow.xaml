@@ -132,8 +132,7 @@
         <Frame Grid.Column="0" Background="{StaticResource ForegroundDarkBlueBrush}" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
 
         <local:OnlineUsersMenu Grid.Column="1">
-            
-            
+
         </local:OnlineUsersMenu>
         
     </Grid>

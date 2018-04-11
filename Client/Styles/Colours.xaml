@@ -17,6 +17,9 @@
     <Color x:Key="ForegroundLight">#686868</Color>
     <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}"/>
 
+    <Color x:Key="WordVeryLightBlue">#ecf6fb</Color>
+    <SolidColorBrush x:Key="WordVeryLightBlueBrush" Color="{StaticResource WordVeryLightBlue}"/>
+
 
     <!-- Colour inspiration https://dribbble.com/shots/4099697-Robbie-Chatbot -->
     
