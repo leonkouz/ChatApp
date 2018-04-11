@@ -113,6 +113,7 @@
     <Compile Include="ViewModels\Base\IHavePassword.cs" />
     <Compile Include="ViewModels\Chat\Design\UserListItemDesignModel.cs" />
     <Compile Include="ViewModels\Chat\UserListItemViewModel.cs" />
+    <Compile Include="ViewModels\Chat\UserListViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ChatClient\StateObject.cs" />
