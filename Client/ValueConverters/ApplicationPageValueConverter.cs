@@ -1,4 +1,4 @@
-﻿using Client.Pages;
+﻿using Client;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-
     /// <summary>
     /// Converts the <see cref="ApplicationPage"/> to an actual view/page
     /// </summary>
@@ -22,6 +21,9 @@ namespace Client
             {
                 case ApplicationPage.Login:
                     return new LoginPage();
+
+                case ApplicationPage.GlobalChat:
+                    return new ChatPage();
 
                 default:
                     Debugger.Break();

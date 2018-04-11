@@ -78,7 +78,7 @@
                                         
                                         <!-- Icon -->
                                         <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
-                                            <Image Source="Images/Icon"/>
+                                            <Image Source="Images/Icon.png"/>
                                         </Button>
                                         
                                         <!-- Title -->
@@ -122,9 +122,20 @@
             />
     </WindowChrome.WindowChrome>
 
-
     <Grid>
-        <Frame Background="{StaticResource ForegroundDarkBlueBrush}" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <Frame Grid.Column="0" Background="{StaticResource ForegroundDarkBlueBrush}" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" />
+
+        <local:OnlineUsersMenu Grid.Column="1">
+            
+            
+        </local:OnlineUsersMenu>
+        
     </Grid>
 
 </Window>

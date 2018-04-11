@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Pages
+namespace Client
 {
     /// <summary>
-    /// Interaction logic for GlobalChatPage.xaml
+    /// Interaction logic for OnlineUsersMenu.xaml
     /// </summary>
-    public partial class GlobalChatPage : Page
+    public partial class OnlineUsersMenu : UserControl
     {
-        public GlobalChatPage()
+        public OnlineUsersMenu()
         {
             InitializeComponent();
         }

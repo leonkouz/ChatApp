@@ -109,7 +109,7 @@ namespace ChatServer
             {
                 //Remove socket from client list
                 clientList.Remove(state.WorkSocket);
-                Console.WriteLine("Client disconnected");
+                Console.WriteLine("Client disconnected with error: " + e.ToString());
             }
 
             // Data was read from the client socket.  

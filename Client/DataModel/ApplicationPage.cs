@@ -12,12 +12,16 @@ namespace Client
     /// </summary>
     public enum ApplicationPage
     {
+
+        /// <summary>
+        /// The intiial login page
+        /// </summary>
         Login = 0,
 
         /// <summary>
         /// The main chat page
         /// </summary>
-        Chat = 1,
+        GlobalChat = 1,
 
     }
 }

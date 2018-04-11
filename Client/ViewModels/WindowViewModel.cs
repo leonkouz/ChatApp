@@ -102,7 +102,7 @@ namespace Client
         /// <summary>
         /// The current page displayed in the window
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.GlobalChat;
 
         /// <summary>
         /// The rectangle border around the window when docked
