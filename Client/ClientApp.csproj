@@ -108,10 +108,12 @@
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisiblityConverter.cs" />
+    <Compile Include="ValueConverters\StringRGBToBrushConvert.cs" />
     <Compile Include="ViewModels\Base\DelegateParameterisedCommand.cs" />
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="ViewModels\Base\IHavePassword.cs" />
+    <Compile Include="ViewModels\Chat\Design\UserListDesignModel.cs" />
     <Compile Include="ViewModels\Chat\Design\UserListItemDesignModel.cs" />
     <Compile Include="ViewModels\Chat\UserListItemViewModel.cs" />
     <Compile Include="ViewModels\Chat\UserListViewModel.cs" />
