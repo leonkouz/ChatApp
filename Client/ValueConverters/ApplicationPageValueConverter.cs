@@ -22,6 +22,9 @@ namespace Client
                 case ApplicationPage.Login:
                     return new LoginPage();
 
+                case ApplicationPage.Register:
+                    return new RegisterPage();
+
                 case ApplicationPage.GlobalChat:
                     return new ChatPage();
 

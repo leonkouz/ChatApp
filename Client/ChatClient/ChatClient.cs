@@ -37,8 +37,8 @@ namespace Client
         {
             _userName = userName;
 
-            _ipHostInfo = Dns.GetHostEntry("10.0.0.158");
-            _ipAddress = IPAddress.Parse("10.0.0.158"); //_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
+            _ipHostInfo = Dns.GetHostEntry("192.168.0.24");
+            _ipAddress = IPAddress.Parse("192.168.0.24"); //_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
             _remoteEP = new IPEndPoint(_ipAddress, _port);
 
             // Create a TCP/IP socket.

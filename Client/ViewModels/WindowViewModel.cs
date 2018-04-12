@@ -36,6 +36,11 @@ namespace Client
         /// </summary>
         private WindowDockPosition _dockPosition = WindowDockPosition.Undocked;
 
+        /// <summary>
+        /// The current page displayed in the window
+        /// </summary>
+        private ApplicationPage _currentPage = ApplicationPage.Login;
+
         #endregion
 
         #region Public Properties
@@ -97,12 +102,19 @@ namespace Client
             get => Borderless ? 0 : _windowRadius;
             set => _windowRadius = value;
         }
-
         
         /// <summary>
         /// The current page displayed in the window
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.GlobalChat;
+        public ApplicationPage CurrentPage
+        {
+            get { return _currentPage; }
+            set
+            {
+                _currentPage = value;
+                RaisePropertyChangedEvent("CurrentPage");
+            }
+        }
 
         /// <summary>
         /// The rectangle border around the window when docked

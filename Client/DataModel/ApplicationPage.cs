@@ -23,5 +23,10 @@ namespace Client
         /// </summary>
         GlobalChat = 1,
 
+        /// <summary>
+        /// The register page
+        /// </summary>
+        Register = 2,
+
     }
 }

@@ -13,7 +13,11 @@ namespace Client
     public class LoginViewModel : BaseViewModel
     {
 
+        #region Private Fields
+
         private bool _loginIsRunning;
+
+        #endregion
 
         #region Public Properties
 
@@ -45,6 +49,11 @@ namespace Client
         /// </summary>
         public ICommand LoginCommand { get; set; }
 
+        /// <summary>
+        /// The command to register for a new account
+        /// </summary>
+        public ICommand RegisterCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -55,7 +64,8 @@ namespace Client
         public LoginViewModel()
         {
             // Create commands
-            LoginCommand = new DelegateParametrisedCommand(async (parameter) => await Login(parameter));
+            LoginCommand = new DelegateParametrisedCommand(async (parameter) => await LoginAsync(parameter));
+            RegisterCommand = new DelegateCommand(async () => await RegisterAsync());
         }
 
         #endregion
@@ -65,18 +75,28 @@ namespace Client
         /// </summary>
         /// <param name="parameter">The <see cref="SecureString"/> pass in from the view for the users password </param>
         /// <returns></returns>
-        public async Task Login(object parameter)
+        public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => this.LoginIsRunning, async () =>
+            await RunCommand(() => LoginIsRunning, async () =>
             {
                 await Task.Delay(5000);
 
-                var email = this.Email;
+                var email = Email;
                 var pass = (parameter as IHavePassword).SecurePassword.Unsecure(); // MUST CHANGE! NEVER STORE UNSECURE PASSWORD IN VARIABLE, PASS DIRECTLY TO METHOD
             });
+        }
 
+        /// <summary>
+        /// Takes the user to the register page
+        /// </summary>
+        /// <param name="parameter">The <see cref="SecureString"/> pass in from the view for the users password </param>
+        /// <returns></returns>
+        public async Task RegisterAsync()
+        {
+            // TODO: Go to register page
+            ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
 
-
+            await Task.Delay(1);
 
         }
     }

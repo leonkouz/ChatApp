@@ -15,7 +15,7 @@
                     <ControlTemplate TargetType="{x:Type ContentControl}">
                         
                         <!-- Content -->
-                        <Grid x:Name="container" Background="White">
+                        <Grid x:Name="container" Background="{StaticResource ForegroundLightBrush}">
 
                             <Grid.ColumnDefinitions>
                                 <!-- Profile Picture-->
@@ -34,7 +34,7 @@
                                     <TextBlock Text="{Binding Initials}"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
-                                                Foreground="White"
+                                                Foreground="{StaticResource ForegroundLightBrush}"
                                                 FontSize="{StaticResource FontSizeAverage}"
                                                 FontFamily="{StaticResource LatoRegular}"/>
                                 </Border>
