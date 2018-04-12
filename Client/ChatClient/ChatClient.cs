@@ -78,12 +78,14 @@ namespace Client
             }
             catch(Exception e)
             {
-                MessageBox.Show(e.ToString());
-
-                // Close the socket
+                throw new Exception(e.GetType().ToString() + e.Message);
+            }
+            finally
+            {
+                // Close the socket as we are not processing any further
                 _client.Close();
 
-                // Indicate that the connection attempt has finished
+                // Indicate that the connection attempt has finished and allows application to continue as normal
                 connectDone.Set();
             }
                 
@@ -95,13 +97,11 @@ namespace Client
         /// <param name="client">Socket to begin receiving data from.</param>
         private static void Receive(Socket client)
         {
-            
-                // Create the state object.  
-                StateObject state = new StateObject();
-                state.WorkSocket = client;
+            // Create the state object.  
+            StateObject state = new StateObject();
+            state.WorkSocket = client;
 
-                client.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReceiveCallback), state);
-            
+            client.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReceiveCallback), state);
         }
 
         private static void ReceiveCallback(IAsyncResult ar)
@@ -146,8 +146,7 @@ namespace Client
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
-                return;
+                throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
 
@@ -183,7 +182,15 @@ namespace Client
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                throw new Exception(e.GetType().ToString() + e.Message);
+            }
+            finally
+            {
+                // Close the socket as we are not processing any further
+                _client.Close();
+
+                // Indicates that the send attempt has finished and allows application to continue as normal
+                sendDone.Set();
             }
         }
     }

@@ -82,6 +82,7 @@
     <Compile Include="AttachedProperties\BasedAttachedProperty.cs" />
     <Compile Include="AttachedProperties\ButtonAttachedProperty.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
+    <Compile Include="ChatClient\ChatClient.cs" />
     <Compile Include="Controls\OnlineUsersMenu.xaml.cs">
       <DependentUpon>OnlineUsersMenu.xaml</DependentUpon>
     </Compile>
@@ -117,7 +118,6 @@
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ChatClient\StateObject.cs" />
-    <Compile Include="ChatClient\Client.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
