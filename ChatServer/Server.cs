@@ -136,7 +136,6 @@ namespace ChatServer
 
                     //Read more
                     handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
-                    
                 }
                 else
                 {
@@ -174,7 +173,6 @@ namespace ChatServer
                 // Complete sending the data to the remote device.  
                 int bytesSent = handler.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to client.", bytesSent);
-
             }
             catch (Exception e)
             {

@@ -20,7 +20,6 @@ namespace Client
             this.Loaded += MainWindow_Loaded;
 
             this.DataContext = new WindowViewModel(this);
-
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

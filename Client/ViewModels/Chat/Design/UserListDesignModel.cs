@@ -51,6 +51,62 @@ namespace Client
                     Initials = "ML",
                     StatusMessage = "this is my status message",
                     Colour = "00d405"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Luke",
+                    Initials = "LM",
+                    StatusMessage = "this is my status message",
+                    Colour = "3099c5"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Jess",
+                    Initials = "JA",
+                    StatusMessage = "this is my status message",
+                    Colour = "fe4503"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Mark",
+                    Initials = "ML",
+                    StatusMessage = "this is my status message",
+                    Colour = "00d405"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Mark",
+                    Initials = "ML",
+                    StatusMessage = "this is my status message",
+                    Colour = "00d405"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Luke",
+                    Initials = "LM",
+                    StatusMessage = "this is my status message",
+                    Colour = "3099c5"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Jess",
+                    Initials = "JA",
+                    StatusMessage = "this is my status message",
+                    Colour = "fe4503"
+                },
+
+                new UserListItemViewModel
+                {
+                    Name = "Mark",
+                    Initials = "ML",
+                    StatusMessage = "this is my status message",
+                    Colour = "00d405"
                 }
             };
         }

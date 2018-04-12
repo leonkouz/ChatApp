@@ -8,47 +8,88 @@
              Height="60"
              d:DesignHeight="60" d:DesignWidth="300">
 
-    <Grid d:DataContext="{x:Static local:UserListItemDesignModel.Instance}" Background="White">
-        
-        <Grid.ColumnDefinitions>
-            <!-- Profile Picture-->
-            <ColumnDefinition Width="Auto"/>
-            <!-- Main Content -->
-            <ColumnDefinition Width="*" />     
-        </Grid.ColumnDefinitions>
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        
+                        <!-- Content -->
+                        <Grid x:Name="container" Background="White">
 
-        <!-- Profile picture padding -->
-        <Border Grid.Column="0" Padding="8">
-            <!-- Profile picture background-->
-            <Border Background="{Binding Colour, Converter={local:StringRGBToBrushConvert}}"
-                    Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
-                <!-- Profile picture intials-->
-                <TextBlock Text="{Binding Initials}"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           Foreground="White"
-                           FontSize="{StaticResource FontSizeAverage}"
-                           FontFamily="{StaticResource LatoRegular}"/>
-            </Border>
-        </Border>
-        
-        <!-- Main content -->
-        <Border  Grid.Column="1" Padding="0 0 8 0">
-            <StackPanel VerticalAlignment="Center">
-                <!-- Name -->
-                <TextBlock Text="{Binding Name}"
-                       Foreground="{StaticResource ChatBubbleBlueBrush}"
-                       TextTrimming="CharacterEllipsis"
-                       FontFamily="{StaticResource LatoRegular}"/>
-                <!-- Message -->
-                <TextBlock Text="{Binding StatusMessage}"
-                       Foreground="{StaticResource ForegroundBrush}"
-                       TextTrimming="CharacterEllipsis"
-                       FontFamily="{StaticResource LatoRegular}"/>
-            </StackPanel>
-        </Border>
+                            <Grid.ColumnDefinitions>
+                                <!-- Profile Picture-->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Main Content -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Profile picture padding -->
+                            <Border Grid.Column="0" Padding="8">
+                                <!-- Profile picture background-->
+                                <Border Background="{Binding Colour, Converter={local:StringRGBToBrushConvert}}"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                                    <!-- Profile picture intials-->
+                                    <TextBlock Text="{Binding Initials}"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="White"
+                                                FontSize="{StaticResource FontSizeAverage}"
+                                                FontFamily="{StaticResource LatoRegular}"/>
+                                </Border>
+                            </Border>
+
+                            <!-- Main content -->
+                            <Border  Grid.Column="1" Padding="0 0 8 0">
+                                <StackPanel VerticalAlignment="Center">
+                                    <!-- Name -->
+                                    <TextBlock Text="{Binding Name}"
+                                                Foreground="{Binding Colour, Converter={local:StringRGBToBrushConvert}}"
+                                                TextTrimming="CharacterEllipsis"
+                                                FontFamily="{StaticResource LatoRegular}"/>
+                                    <!-- Message -->
+                                    <TextBlock Text="{Binding StatusMessage}"
+                                                Foreground="{StaticResource ForegroundBrush}"
+                                                TextTrimming="CharacterEllipsis"
+                                                FontFamily="{StaticResource LatoRegular}"/>
+                                </StackPanel>
+                            </Border>
 
 
-    </Grid>
+                        </Grid>
+
+                        <!-- Hover effect -->
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="{StaticResource WordVeryLightBlue}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="White" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="container" Value="{StaticResource ForegroundVeryDarkBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <ContentControl d:DataContext="{x:Static local:UserListItemDesignModel.Instance}"
+                    Style="{StaticResource ContentStyle}"/>
+
+    
 </UserControl>

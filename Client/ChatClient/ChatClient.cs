@@ -37,8 +37,8 @@ namespace Client
         {
             _userName = userName;
 
-            _ipHostInfo = Dns.GetHostEntry("192.168.0.24");
-            _ipAddress = IPAddress.Parse("192.168.0.24"); //_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
+            _ipHostInfo = Dns.GetHostEntry("10.0.0.158");
+            _ipAddress = IPAddress.Parse("10.0.0.158"); //_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
             _remoteEP = new IPEndPoint(_ipAddress, _port);
 
             // Create a TCP/IP socket.
@@ -78,17 +78,14 @@ namespace Client
             }
             catch(Exception e)
             {
-                throw new Exception(e.GetType().ToString() + e.Message);
-            }
-            finally
-            {
                 // Close the socket as we are not processing any further
                 _client.Close();
 
                 // Indicate that the connection attempt has finished and allows application to continue as normal
                 connectDone.Set();
+
+                throw new Exception(e.GetType().ToString() + e.Message);
             }
-                
         }
 
         /// <summary>
@@ -182,15 +179,13 @@ namespace Client
             }
             catch (Exception e)
             {
-                throw new Exception(e.GetType().ToString() + e.Message);
-            }
-            finally
-            {
                 // Close the socket as we are not processing any further
                 _client.Close();
 
                 // Indicates that the send attempt has finished and allows application to continue as normal
                 sendDone.Set();
+
+                throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
     }
