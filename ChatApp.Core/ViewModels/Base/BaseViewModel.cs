@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp
+namespace ChatApp.Core
 {
     /// <summary>
     /// A base view model that fire the Property Changed event
@@ -39,7 +39,7 @@ namespace ChatApp
         /// <param name="updatingFlag">The boolean property flag definining if the command is already running</param>
         /// <param name="action">The action to run if the action is not already running</param>
         /// <returns></returns>
-        protected async Task RunCommand(Expression<Func<bool>> updatingFlag, Func<Task> action)
+        protected async Task RunCommandAsync(Expression<Func<bool>> updatingFlag, Func<Task> action)
         {
             // Check if the flag property is true (indicating the function is already running)
             if (updatingFlag.GetPropertyValue())

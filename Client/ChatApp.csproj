@@ -82,7 +82,6 @@
     <Compile Include="AttachedProperties\BasedAttachedProperty.cs" />
     <Compile Include="AttachedProperties\ButtonAttachedProperty.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
-    <Compile Include="ChatClient\ChatClient.cs" />
     <Compile Include="Controls\OnlineUsersMenu.xaml.cs">
       <DependentUpon>OnlineUsersMenu.xaml</DependentUpon>
     </Compile>
@@ -92,8 +91,6 @@
     <Compile Include="Controls\UserListItemControl.xaml.cs">
       <DependentUpon>UserListItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\ApplicationPage.cs" />
-    <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
@@ -107,23 +104,10 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Security\SecureStringHelpers.cs" />
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisiblityConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConvert.cs" />
-    <Compile Include="ViewModels\Base\DelegateParameterisedCommand.cs" />
-    <Compile Include="ViewModels\Base\DelegateCommand.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="ViewModels\Base\IHavePassword.cs" />
-    <Compile Include="ViewModels\Chat\Design\UserListDesignModel.cs" />
-    <Compile Include="ViewModels\Chat\Design\UserListItemDesignModel.cs" />
-    <Compile Include="ViewModels\Chat\UserListItemViewModel.cs" />
-    <Compile Include="ViewModels\Chat\UserListViewModel.cs" />
-    <Compile Include="ViewModels\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ChatClient\StateObject.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Page Include="Controls\OnlineUsersMenu.xaml">
@@ -177,10 +161,6 @@
     <Page Include="Styles\ListViews.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Windows.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Texts.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -251,6 +231,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChatApp.Core\ChatApp.Core.csproj">
+      <Project>{c350a51c-1802-49af-abfe-ab82e69513b0}</Project>
+      <Name>ChatApp.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

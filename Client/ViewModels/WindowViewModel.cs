@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using ChatApp.Core;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 

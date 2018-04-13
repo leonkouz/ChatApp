@@ -19,7 +19,7 @@ namespace ChatApp
         /// <summary>
         /// A single static instance of this value converter
         /// </summary>
-        private static T _converter = null;
+        private static T Converter = null;
 
         /// <summary>
         /// Provides a static instance of the value converter
@@ -28,7 +28,7 @@ namespace ChatApp
         /// <returns></returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _converter ?? (_converter = new T());
+            return Converter ?? (Converter = new T());
         }
 
         /// <summary>

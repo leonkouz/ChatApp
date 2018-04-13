@@ -9,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ChatApp
+namespace ChatApp.Core
 {
-    class ChatClient
+    public class ChatClient
     {
         // The port number for the remote device.  
         private const int _port = 54003;
@@ -120,8 +120,10 @@ namespace ChatApp
         private static void Receive(Socket client)
         {
             // Create the state object.  
-            StateObject state = new StateObject();
-            state.WorkSocket = client;
+            StateObject state = new StateObject
+            {
+                WorkSocket = client
+            };
 
             client.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReceiveCallback), state);
         }

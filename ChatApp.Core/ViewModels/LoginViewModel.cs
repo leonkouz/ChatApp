@@ -1,11 +1,7 @@
-﻿using System;
-using System.Security;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ChatApp
+namespace ChatApp.Core
 {
     /// <summary>
     /// The View Model for a login screen
@@ -77,7 +73,7 @@ namespace ChatApp
         /// <returns></returns>
         public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => LoginIsRunning, async () =>
+            await RunCommandAsync(() => LoginIsRunning, async () =>
             {
                 await Task.Delay(5000);
 
@@ -94,7 +90,7 @@ namespace ChatApp
         public async Task RegisterAsync()
         {
             // TODO: Go to register page
-            ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
+            //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
 
             await Task.Delay(1);
 

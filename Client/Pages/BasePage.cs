@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,7 +76,7 @@ namespace ChatApp
                 this.Visibility = Visibility.Collapsed;
 
             // List out for page loaded
-            this.Loaded += BasePage_Loaded;
+            this.Loaded += BasePage_LoadedAsync;
 
             this.DataContext = new VM();
         }
@@ -87,17 +88,17 @@ namespace ChatApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void BasePage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
             //Animate the page in
-            await AnimateIn();
+            await AnimateInAsync();
         }
 
         /// <summary>
         /// Animates the page in 
         /// </summary>
         /// <returns></returns>
-        public async Task AnimateIn()
+        public async Task AnimateInAsync()
         {
             // Make sure we have something to do
             if (this.PageLoadAnimation == PageAnimation.None)
@@ -118,7 +119,7 @@ namespace ChatApp
         /// Animates the page out
         /// </summary>
         /// <returns></returns>
-        public async Task AnimateOut()
+        public async Task AnimateOutAsync()
         {
             // Make sure we have something to do
             if (this.PageUnloadAnimation == PageAnimation.None)

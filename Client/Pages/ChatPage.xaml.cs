@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace ChatApp
     /// <summary>
     /// Interaction logic for ChatPage.xaml
     /// </summary>
-    public partial class ChatPage : Page
+    public partial class ChatPage : BasePage<LoginViewModel>
     {
         public ChatPage()
         {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ChatApp
+namespace ChatApp.Core
 {
     /// <summary>
     /// The view model for the messaging section of the MainWindow
@@ -92,10 +92,13 @@ namespace ChatApp
         /// <param name="message">Message received</param>
         private void AddToHistory(Message message)
         {
-            App.Current.Dispatcher.Invoke(delegate // <--- HERE
+
+            throw new NotImplementedException();
+            /*
+            /*App.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
                 _history.Add(message);
-            });
+            });*/
         }
 
         /// <summary>
@@ -103,10 +106,11 @@ namespace ChatApp
         /// </summary>
         private void ClearTextBox()
         {
-            App.Current.Dispatcher.Invoke(delegate // <--- HERE
+            throw new NotImplementedException();
+            /*App.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
                 UserMessage = "";
-            });
+            });*/
         }
     }
 }
