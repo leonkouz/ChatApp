@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// Interaction logic for OnlineUsersMenu.xaml

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// Animation helpers for <see cref="Storyboard"/>

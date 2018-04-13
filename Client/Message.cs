@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client
+namespace ChatApp
 {
     public class Message
     {

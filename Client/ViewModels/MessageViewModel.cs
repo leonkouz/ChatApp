@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// The view model for the messaging section of the MainWindow

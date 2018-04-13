@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// A converter that takes in a RGB string and converts it to a WPF brush

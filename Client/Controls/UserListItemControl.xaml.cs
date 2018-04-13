@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// Interaction logic for UserListItemControl.xaml

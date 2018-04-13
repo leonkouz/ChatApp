@@ -132,7 +132,7 @@ namespace ChatServer
             {
                 //Remove socket from client list
                 clientList.Remove(state.WorkSocket);
-                Console.WriteLine("Client disconnected with error: " + e.ToString());
+                Console.WriteLine("ChatApp disconnected with error: " + e.ToString());
             }
 
             // Data was read from the client socket.  
@@ -155,7 +155,7 @@ namespace ChatServer
                     //Removes previous data received
                     state.DeleteData();
 
-                    SendDataToAllClients(content);
+                    SendDataToAllChatApps(content);
 
                     //Read more
                     handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
@@ -168,7 +168,7 @@ namespace ChatServer
             }
         }
 
-        private void SendDataToAllClients(string data)
+        private void SendDataToAllChatApps(string data)
         {
             foreach (var socket in clientList) // Repeat for each connected client (socket held in a dynamic array)
             {

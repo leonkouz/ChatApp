@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
-namespace Client
+namespace ChatApp
 { 
     /// <summary>
     /// Helpers to animate pages in specific ways

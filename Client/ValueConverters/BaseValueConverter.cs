@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// A base value converter that allows direct XAML usage

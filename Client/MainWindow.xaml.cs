@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

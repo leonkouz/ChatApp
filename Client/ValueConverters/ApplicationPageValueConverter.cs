@@ -1,4 +1,4 @@
-﻿using Client;
+﻿using ChatApp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// Converts the <see cref="ApplicationPage"/> to an actual view/page

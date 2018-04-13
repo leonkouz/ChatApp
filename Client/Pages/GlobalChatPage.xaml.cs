@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.Pages
+namespace ChatApp.Pages
 {
     /// <summary>
     /// Interaction logic for GlobalChatPage.xaml

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// The View Model for the custom flat window

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Client
+namespace ChatApp
 {
     /// <summary>
     /// A converter that takes in a boolean and returns a <see cref="Visiblity"/>
