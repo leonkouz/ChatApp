@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.ServiceModel.Channels;
 using System.Net;
+using System.Net.NetworkInformation;
 
 namespace ChatServer
 {
@@ -41,6 +42,28 @@ namespace ChatServer
             _endPoint = new IPEndPoint(_ipAddress, _port);
 
             _listener = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+        }
+
+        /// <summary>
+        /// Returns IPv4 address that has a default gateway
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIpAddress()
+        {
+            foreach (var netI in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (netI.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (netI.NetworkInterfaceType != NetworkInterfaceType.Ethernet || netI.OperationalStatus != OperationalStatus.Up))
+                    continue;
+
+                foreach (var uniIpAddrInfo in netI.GetIPProperties().UnicastAddresses.Where(x => netI.GetIPProperties().GatewayAddresses.Count > 0))
+                {
+                    if (uniIpAddrInfo.Address.AddressFamily == AddressFamily.InterNetwork && uniIpAddrInfo.AddressPreferredLifetime != uint.MaxValue)
+                        return uniIpAddrInfo.Address.ToString();
+                }
+            }
+
+            Console.WriteLine("You local IPv4 address couldn't be found...");
+            return null;
         }
 
         public void Start()
