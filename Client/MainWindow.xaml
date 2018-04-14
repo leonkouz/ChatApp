@@ -135,7 +135,7 @@
                x:Name="MainFrame" 
                Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}" />
 
-        <local:OnlineUsersMenu Grid.Column="1">
+        <local:OnlineUsersMenu Grid.Column="1" local:AnimateSlideInFromLeftProperty.Value="False">
 
             <local:UserListControl/>
 
