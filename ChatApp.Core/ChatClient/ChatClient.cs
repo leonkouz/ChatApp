@@ -14,7 +14,7 @@ namespace ChatApp.Core
     public class ChatClient
     {
         // The port number for the remote device.  
-        private const int _port = 54003;
+        private const int _port = 8008;
 
         // ManualResetEvent instances signal completion.  
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
@@ -49,6 +49,7 @@ namespace ChatApp.Core
 
             // Connect to the remote endpoint.  
             _client.BeginConnect(_remoteEP, new AsyncCallback(ConnectCallback), _client);
+            
             connectDone.WaitOne();
         }
 
@@ -85,7 +86,6 @@ namespace ChatApp.Core
 
         private static void ConnectCallback(IAsyncResult ar)
         {
-
             try
             {
                 // Retrieve the socket from the state object.  
@@ -100,6 +100,7 @@ namespace ChatApp.Core
                 connectDone.Set();
 
                 Receive(client);
+
             }
             catch(Exception e)
             {
@@ -109,9 +110,7 @@ namespace ChatApp.Core
                 // Indicate that the connection attempt has finished and allows application to continue as normal
                 connectDone.Set();
 
-
-                MessageBox.Show(e.ToString());
-                //throw new Exception(e.GetType().ToString() + e.Message);
+                throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
 

@@ -37,7 +37,7 @@ namespace ChatServer
         public Server(IPAddress ip, int port)
         {
             _port = port;
-            _ipAddress = ip;
+            _ipAddress = IPAddress.Any;
 
             _endPoint = new IPEndPoint(_ipAddress, _port);
 
