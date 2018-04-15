@@ -109,7 +109,9 @@ namespace ChatApp.Core
                 // Indicate that the connection attempt has finished and allows application to continue as normal
                 connectDone.Set();
 
-                throw new Exception(e.GetType().ToString() + e.Message);
+
+                MessageBox.Show(e.ToString());
+                //throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
 

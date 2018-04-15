@@ -8,7 +8,6 @@ namespace ChatApp.Core
     /// </summary>
     public class RegisterViewModel : BaseViewModel
     {
-
         #region Private Fields
 
         private bool _registerIsRunning;
@@ -87,7 +86,7 @@ namespace ChatApp.Core
         public async Task LoginAsync()
         {
             // TODO: Go to register page
-            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Login;
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
 
             await Task.Delay(1);
         }

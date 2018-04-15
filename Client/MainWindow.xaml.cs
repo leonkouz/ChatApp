@@ -21,6 +21,7 @@ namespace ChatApp
             Loaded += MainWindow_Loaded;
 
             DataContext = new WindowViewModel(this);
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

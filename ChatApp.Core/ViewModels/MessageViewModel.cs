@@ -4,18 +4,22 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ChatApp.Core
 {
     /// <summary>
     /// The view model for the messaging section of the MainWindow
     /// </summary>
-        public class MessageViewModel : BaseViewModel
+    public class MessageViewModel : BaseViewModel
     {
         public MessageViewModel()
         {
+            SendMessageCommand = new DelegateCommand(SendMessage);
             Message.Received += Message_Received;
+
         }
 
         #region Private Fields
@@ -36,7 +40,7 @@ namespace ChatApp.Core
             Message message = new Message(e.Content, e.TimeStamp);
             AddToHistory(message);
         }
-        
+
         /// <summary>
         /// A list of each message received from the server
         /// </summary>
@@ -65,10 +69,7 @@ namespace ChatApp.Core
         /// <summary>
         /// Fires the SendMessage method
         /// </summary>
-        public ICommand SendMessageCommand
-        {
-            get { return new DelegateCommand(SendMessage);}
-        }
+        public ICommand SendMessageCommand { get; set; }
 
         #endregion
 
@@ -76,7 +77,7 @@ namespace ChatApp.Core
         /// Sends the users message to the server
         /// </summary>
         private void SendMessage()
-        {    
+        {
             string messageContent = _userMessage;
             DateTime timeStamp = DateTime.Now;
             Message message = new Message(messageContent, timeStamp);
@@ -93,12 +94,10 @@ namespace ChatApp.Core
         private void AddToHistory(Message message)
         {
 
-            throw new NotImplementedException();
-            /*
-            /*App.Current.Dispatcher.Invoke(delegate // <--- HERE
+            Application.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
                 _history.Add(message);
-            });*/
+            });
         }
 
         /// <summary>
@@ -106,11 +105,10 @@ namespace ChatApp.Core
         /// </summary>
         private void ClearTextBox()
         {
-            throw new NotImplementedException();
-            /*App.Current.Dispatcher.Invoke(delegate // <--- HERE
+            Application.Current.Dispatcher.Invoke(delegate // <--- HERE
             {
                 UserMessage = "";
-            });*/
+            });
         }
     }
 }

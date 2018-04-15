@@ -75,10 +75,15 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => LoginIsRunning, async () =>
             {
-                await Task.Delay(5000);
 
+                await Task.Delay(1000);
+
+                // Go to chat page
+                IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
+
+                /*
                 var email = Email;
-                var pass = (parameter as IHavePassword).SecurePassword.Unsecure(); // MUST CHANGE! NEVER STORE UNSECURE PASSWORD IN VARIABLE, PASS DIRECTLY TO METHOD
+                var pass = (parameter as IHavePassword).SecurePassword.Unsecure(); // MUST CHANGE! NEVER STORE UNSECURE PASSWORD IN VARIABLE, PASS DIRECTLY TO METHOD*/
             });
         }
 
@@ -90,7 +95,7 @@ namespace ChatApp.Core
         public async Task RegisterAsync()
         {
             // TODO: Go to register page
-            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
 
             await Task.Delay(1);
         }

@@ -12,7 +12,6 @@ namespace ChatApp.Core
     /// </summary>
     public enum ApplicationPage
     {
-
         /// <summary>
         /// The intiial login page
         /// </summary>
@@ -27,6 +26,5 @@ namespace ChatApp.Core
         /// The register page
         /// </summary>
         Register = 2,
-
     }
 }

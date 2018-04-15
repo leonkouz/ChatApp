@@ -11,12 +11,22 @@ namespace ChatApp.Core
     /// </summary>
     public class ApplicationViewModel : BaseViewModel
     {
+        #region Private Fields
 
         /// <summary>
         /// The current page displayed in the window
         /// </summary>
         private ApplicationPage _currentPage = ApplicationPage.Login;
+
+
+        /// <summary>
+        /// Indicites whether the side menu should be shown
+        /// </summary>
         private bool _sideMenuVisible = false;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// The current page displayed in the window
@@ -24,7 +34,7 @@ namespace ChatApp.Core
         public ApplicationPage CurrentPage
         {
             get => _currentPage;
-            set
+            private set
             {
                 _currentPage = value;
                 RaisePropertyChangedEvent("CurrentPage");
@@ -42,6 +52,23 @@ namespace ChatApp.Core
                 _sideMenuVisible = value;
                 RaisePropertyChangedEvent("SideMenuVisible");
             }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Navigates to the specified page
+        /// </summary>
+        /// <param name="page">The page to go to</param>
+        public void GoToPage(ApplicationPage page)
+        {
+            // Set the current page
+            CurrentPage = page;
+
+            // Show side menu or not
+            if (page == ApplicationPage.GlobalChat)
+                SideMenuVisible = true;
+
         }
 
     }

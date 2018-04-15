@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,12 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ChatApp.Pages
+namespace ChatApp
 {
     /// <summary>
     /// Interaction logic for GlobalChatPage.xaml
     /// </summary>
-    public partial class GlobalChatPage : Page
+    public partial class GlobalChatPage : BasePage<MessageViewModel>
     {
         public GlobalChatPage()
         {
