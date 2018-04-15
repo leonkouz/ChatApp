@@ -7,14 +7,13 @@ using System.Windows;
 
 namespace ChatApp
 {
-    
     /// <summary>
     /// A base attached property to replace the vanilla WPF attached property
     /// </summary>
     /// <typeparam name="Parent">The parent class to be the attached property</typeparam>
     /// <typeparam name="PropertyType">The type of this attached property</typeparam>
     public abstract class BasedAttachedProperty<Parent, PropertyType>
-        where Parent : BasedAttachedProperty<Parent, PropertyType>, new()
+        where Parent : new()
     {
 
         #region Public Events
@@ -59,10 +58,10 @@ namespace ChatApp
         private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //Call the parent function
-            Instance.OnValueChanged(d, e);
+            (Instance as BasedAttachedProperty<Parent, PropertyType>)?.OnValueChanged(d, e);
 
             // Call Event listerns
-            Instance.ValueChanged(d, e);
+            (Instance as BasedAttachedProperty<Parent, PropertyType>)?.ValueChanged(d, e);
         }
 
         /// <summary>
@@ -73,10 +72,10 @@ namespace ChatApp
         private static object OnValuePropertyUpdated(DependencyObject d, object value)
         {
             //Call the parent function
-            Instance.OnValueUpdated(d, value);
+            (Instance as BasedAttachedProperty<Parent, PropertyType>)?.OnValueUpdated(d, value);
 
             // Call Event listerns
-            Instance.ValueUpdated(d, value);
+            (Instance as BasedAttachedProperty<Parent, PropertyType>)?.ValueUpdated(d, value);
 
             return value;
         }

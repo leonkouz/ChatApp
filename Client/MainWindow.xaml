@@ -130,12 +130,13 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Frame Grid.Column="0" 
+        <local:PageHost Grid.Column="0" 
                Background="{StaticResource ForegroundDarkBlueBrush}" 
-               x:Name="MainFrame" 
-               Content="{Binding ApplicationViewModel.CurrentPage, 
+               d:DataContext=""
+               DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                  Source={x:Static local:ViewModelLocator.Instance}, 
-                                 Converter={local:ApplicationPageValueConverter}}" />
+                                 Converter={local:ApplicationPageValueConverter}}"
+               CurrentPage="{Binding}"/>
 
         <!-- Side Menu -->
         <local:OnlineUsersMenu 

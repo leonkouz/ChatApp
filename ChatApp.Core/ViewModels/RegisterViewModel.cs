@@ -4,14 +4,14 @@ using System.Windows.Input;
 namespace ChatApp.Core
 {
     /// <summary>
-    /// The View Model for a login screen
+    /// The View Model for a register screen
     /// </summary>
-    public class LoginViewModel : BaseViewModel
+    public class RegisterViewModel : BaseViewModel
     {
 
         #region Private Fields
 
-        private bool _loginIsRunning;
+        private bool _registerIsRunning;
 
         #endregion
 
@@ -25,13 +25,13 @@ namespace ChatApp.Core
         /// <summary>
         /// A flag indicating if the login command is running
         /// </summary>
-        public bool LoginIsRunning
+        public bool RegisterIsRunning
         {
-            get { return _loginIsRunning; }
+            get { return _registerIsRunning; }
             set
             {
-                _loginIsRunning = value;
-                RaisePropertyChangedEvent("LoginIsRunning");
+                _registerIsRunning = value;
+                RaisePropertyChangedEvent("RegisterIsRunning");
             }
 
         }
@@ -57,40 +57,37 @@ namespace ChatApp.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public RegisterViewModel()
         {
             // Create commands
-            LoginCommand = new DelegateParametrisedCommand(async (parameter) => await LoginAsync(parameter));
-            RegisterCommand = new DelegateCommand(async () => await RegisterAsync());
+            RegisterCommand = new DelegateParametrisedCommand(async (parameter) => await RegisterAsync(parameter));
+            LoginCommand = new DelegateCommand(async () => await LoginAsync());
         }
 
         #endregion
 
         /// <summary>
-        /// Attempts to log the user in
+        /// Attempts to register a new user
         /// </summary>
         /// <param name="parameter">The <see cref="SecureString"/> pass in from the view for the users password </param>
         /// <returns></returns>
-        public async Task LoginAsync(object parameter)
+        public async Task RegisterAsync(object parameter)
         {
-            await RunCommandAsync(() => LoginIsRunning, async () =>
+            await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
                 await Task.Delay(5000);
-
-                var email = Email;
-                var pass = (parameter as IHavePassword).SecurePassword.Unsecure(); // MUST CHANGE! NEVER STORE UNSECURE PASSWORD IN VARIABLE, PASS DIRECTLY TO METHOD
             });
         }
 
         /// <summary>
-        /// Takes the user to the register page
+        /// Takes the user to the login page
         /// </summary>
         /// <param name="parameter">The <see cref="SecureString"/> pass in from the view for the users password </param>
         /// <returns></returns>
-        public async Task RegisterAsync()
+        public async Task LoginAsync()
         {
             // TODO: Go to register page
-            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Login;
 
             await Task.Delay(1);
         }

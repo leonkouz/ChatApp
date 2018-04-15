@@ -10,22 +10,12 @@ using System.Windows.Media.Animation;
 
 namespace ChatApp
 {
+
     /// <summary>
-    /// A base page for all pages to gain base functionality
+    ///  The base page for all pages to gain base functionality
     /// </summary>
-    public class BasePage<VM> : Page
-        where VM : BaseViewModel, new()
+    public class BasePage: Page
     {
-        #region Private Fields
-
-        /// <summary>
-        /// The View Model associated with this page
-        /// </summary>
-        private VM _viewModel;
-
-        #endregion
-
-
         #region Public Properties
 
         /// <summary>
@@ -41,30 +31,16 @@ namespace ChatApp
         /// <summary>
         /// The time any slide animation takes to complete
         /// </summary>
-        public float SlideSeconds { get; set; } = 0.8f;
+        public float SlideSeconds { get; set; } = 0.4f;
 
         /// <summary>
-        /// The View Model associated with this page
+        /// A flag to indicate if this page should animate out on load
         /// </summary>
-        public VM ViewModel
-        {
-            get { return _viewModel; }
-            set
-            {
-                // IF nothing has changed, return
-                if (_viewModel == value)
-                    return;
-
-                // Update the view model
-                _viewModel = value;
-
-                // Create a default view model
-                this.ViewModel = _viewModel;
-            }
-        }
-
+        public bool ShouldAnimateOut { get; set; }
 
         #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Default Constructor
@@ -77,9 +53,9 @@ namespace ChatApp
 
             // List out for page loaded
             this.Loaded += BasePage_LoadedAsync;
-
-            this.DataContext = new VM();
         }
+
+        #endregion
 
         #region Animation Load / Unload
 
@@ -90,8 +66,14 @@ namespace ChatApp
         /// <param name="e"></param>
         private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
-            //Animate the page in
-            await AnimateInAsync();
+            // if we are setup to animate out on load
+            if (ShouldAnimateOut)
+                // Animate out
+                await AnimateOutAsync();
+            // otheriwse....
+            else
+                // Animate in
+                await AnimateInAsync();
         }
 
         /// <summary>
@@ -137,5 +119,56 @@ namespace ChatApp
         }
 
         #endregion
+    }
+
+
+    /// <summary>
+    /// A base page with added ViewModel support
+    /// </summary>
+    public class BasePage<VM> : BasePage
+        where VM : BaseViewModel, new()
+    {
+        #region Private Fields
+
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        private VM _viewModel;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        public VM ViewModel
+        {
+            get { return _viewModel; }
+            set
+            {
+                // IF nothing has changed, return
+                if (_viewModel == value)
+                    return;
+
+                // Update the view model
+                _viewModel = value;
+
+                // Create a default view model
+                this.ViewModel = _viewModel;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public BasePage() : base()
+        {
+            
+            this.DataContext = new VM();
+        }
+
     }
 }
