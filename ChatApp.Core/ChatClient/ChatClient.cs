@@ -38,19 +38,27 @@ namespace ChatApp.Core
         {
             _userName = userName;
 
-            string ipv4Address = GetLocalIpAddress();
+            try
+            {
+                string ipv4Address = GetLocalIpAddress(); // Replace with external IP for remote connections
 
-            _ipHostInfo = Dns.GetHostEntry(ipv4Address);
-            _ipAddress = IPAddress.Parse(ipv4Address); //_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily. InterNetwork);
-            _remoteEP = new IPEndPoint(_ipAddress, _port);
+                //_ipHostInfo = Dns.GetHostEntry(ipv4Address);
 
-            // Create a TCP/IP socket.
-            _client = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                _ipAddress = IPAddress.Parse(ipv4Address); //_ipHostInfo.AddressList.First(x=>x. AddressFamily == AddressFamily.InterNetwork);
+                _remoteEP = new IPEndPoint(_ipAddress, _port);
 
-            // Connect to the remote endpoint.  
-            _client.BeginConnect(_remoteEP, new AsyncCallback(ConnectCallback), _client);
-            
-            connectDone.WaitOne();
+                // Create a TCP/IP socket.
+                _client = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                // Connect to the remote endpoint.  
+                _client.BeginConnect(_remoteEP, new AsyncCallback(ConnectCallback), _client);
+
+                connectDone.WaitOne();
+            }
+            catch(Exception eee)
+            {
+                MessageBox.Show(eee.ToString());
+            }
         }
 
         /// <summary>
@@ -110,7 +118,9 @@ namespace ChatApp.Core
                 // Indicate that the connection attempt has finished and allows application to continue as normal
                 connectDone.Set();
 
-                throw new Exception(e.GetType().ToString() + e.Message);
+                MessageBox.Show(e.ToString());
+
+                //throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
 

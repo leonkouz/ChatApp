@@ -18,15 +18,8 @@ namespace ChatApp
 
             //_user = userName;
 
-            Loaded += MainWindow_Loaded;
-
             DataContext = new WindowViewModel(this);
 
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            ChatClient.Connect(_user);
         }
 
         private void SendMessageButton_Click(object sender, RoutedEventArgs e)
