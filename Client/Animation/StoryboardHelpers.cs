@@ -21,13 +21,14 @@ namespace ChatApp
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to start from</param>
         /// <param name="decelerationRatio">The deceleration ratio</param>
-        public static void AddSlideFromRight(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f)
+        /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
+        public static void AddSlideFromRight(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             // Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(offset, 0, -offset, 0),
+                From = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
                 To = new Thickness(0),
                 DecelerationRatio = decelerationRatio
             };
@@ -46,13 +47,13 @@ namespace ChatApp
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the left to start from</param>
         /// <param name="decelerationRatio">The deceleration ratio</param>
-        public static void AddSlideFromLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f)
+        public static void AddSlideFromLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             // Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(-offset, 0, offset, 0),
+                From = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
                 To = new Thickness(0),
                 DecelerationRatio = decelerationRatio
             };
@@ -72,14 +73,15 @@ namespace ChatApp
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the left to end at</param>
         /// <param name="decelerationRatio">The deceleration ratio</param>
-        public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f)
+        /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
+        public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             // Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
-                To = new Thickness(-offset, 0, offset, 0),
+                To = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
                 DecelerationRatio = decelerationRatio
             };
 
@@ -97,14 +99,15 @@ namespace ChatApp
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to end at</param>
         /// <param name="decelerationRatio">The deceleration ratio</param>
-        public static void AddSlideToRight(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f)
+        /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
+        public static void AddSlideToRight(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             // Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
-                To = new Thickness(offset, 0, -offset, 0),
+                To = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
                 DecelerationRatio = decelerationRatio
             };
 

@@ -89,9 +89,12 @@ namespace ChatApp.Core
         /// <returns></returns>
         public async Task RegisterAsync()
         {
+
+            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
+            return;
+
             // TODO: Go to register page
             IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
-            //((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Register;
 
             await Task.Delay(1);
 

@@ -16,6 +16,7 @@ namespace ChatApp.Core
         /// The current page displayed in the window
         /// </summary>
         private ApplicationPage _currentPage = ApplicationPage.Login;
+        private bool _sideMenuVisible = false;
 
         /// <summary>
         /// The current page displayed in the window
@@ -33,8 +34,15 @@ namespace ChatApp.Core
         /// <summary>
         /// True if the side menu should be shown
         /// </summary>
-        public bool SideMenuVisible { get; set; } = false;
-
+        public bool SideMenuVisible
+        {
+            get => _sideMenuVisible;
+            set
+            {
+                _sideMenuVisible = value;
+                RaisePropertyChangedEvent("SideMenuVisible");
+            }
+        }
 
     }
 }

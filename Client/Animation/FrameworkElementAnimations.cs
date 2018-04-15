@@ -19,14 +19,15 @@ namespace ChatApp
         /// </summary>
         /// <param name="element">The element to animate</param>
         /// <param name="seconds">The time the animation will take</param>
+        /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
         /// <returns></returns>
-        public static async Task SlideAndFadeInFromRight(this FrameworkElement element, float seconds = 0.3f)
+        public static async Task SlideAndFadeInFromRight(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             // Create the storyboard
             var sb = new Storyboard();
 
             // Add slide from right animation
-            sb.AddSlideFromRight(seconds, element.ActualWidth);
+            sb.AddSlideFromRight(seconds, element.ActualWidth, keepMargin: keepMargin);
 
             // Add fade in animation
             sb.AddFadeIn(seconds);
@@ -48,14 +49,15 @@ namespace ChatApp
         /// </summary>
         /// <param name="element">The element to animate</param>
         /// <param name="seconds">The time the animation will take</param>
+        /// /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
         /// <returns></returns>
-        public static async Task SlideAndFadeInFromLeft(this FrameworkElement element, float seconds = 0.3f)
+        public static async Task SlideAndFadeInFromLeft(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             // Create the storyboard
             var sb = new Storyboard();
 
             // Add slide from right animation
-            sb.AddSlideFromLeft(seconds, element.ActualWidth);
+            sb.AddSlideFromLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
 
             // Add fade in animation
             sb.AddFadeIn(seconds);
@@ -77,14 +79,15 @@ namespace ChatApp
         /// </summary>
         /// <param name="element">The element to animate</param>
         /// <param name="seconds">The time the animation will take</param>
+        /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
         /// <returns></returns>
-        public static async Task SlideAndFadeOutToLeft (this FrameworkElement element, float seconds = 0.3f)
+        public static async Task SlideAndFadeOutToLeft (this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             // Create the storyboard
             var sb = new Storyboard();
 
             // Add slide to left animation
-            sb.AddSlideToLeft(seconds, element.ActualWidth);
+            sb.AddSlideToLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
 
             // Add fade out animation
             sb.AddFadeOut(seconds);
@@ -106,14 +109,15 @@ namespace ChatApp
         /// </summary>
         /// <param name="element">The element to animate</param>
         /// <param name="seconds">The time the animation will take</param>
+        /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
         /// <returns></returns>
-        public static async Task SlideAndFadeOutToRight(this FrameworkElement element, float seconds = 0.3f)
+        public static async Task SlideAndFadeOutToRight(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             // Create the storyboard
             var sb = new Storyboard();
 
             // Add slide to left animation
-            sb.AddSlideToRight(seconds, element.ActualWidth);
+            sb.AddSlideToRight(seconds, element.ActualWidth, keepMargin: keepMargin);
 
             // Add fade out animation
             sb.AddFadeOut(seconds);
