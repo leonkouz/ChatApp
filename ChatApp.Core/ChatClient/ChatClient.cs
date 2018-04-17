@@ -11,29 +11,59 @@ using System.Windows;
 
 namespace ChatApp.Core
 {
+    /// <summary>
+    /// Allows connections to chat server
+    /// </summary>
     public class ChatClient
     {
-        // The port number for the remote device.  
-        private const int _port = 8008;
+        #region Private Fields
 
         // ManualResetEvent instances signal completion.  
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
         private static ManualResetEvent receiveDone = new ManualResetEvent(false);
 
-        private static IPHostEntry _ipHostInfo;
+        //private static IPHostEntry _ipHostInfo;
+
+        /// <summary>
+        /// The IP address to connect to
+        /// </summary>
         private static IPAddress _ipAddress;
+
+        /// <summary>
+        /// The port number for the remote device.  
+        /// </summary>
+        private const int _port = 8008;
+
+        /// <summary>
+        /// The remote endpoint to connect to
+        /// </summary>
         private static IPEndPoint _remoteEP;
 
+        /// <summary>
+        ///  Socket used to connect to server
+        /// </summary>
         private static Socket _client;
 
+        /// <summary>
+        /// The users name
+        /// </summary>
         private static string _userName;
 
-        public static string UserName
-        {
-            get { return _userName; }
-        }
+        #endregion
 
+        #region Public Properties
+
+        public static string UserName => _userName;
+
+        #endregion
+
+        #region Server Communication
+
+        /// <summary>
+        /// Connects to the chat server
+        /// </summary>
+        /// <param name="userName"></param>
         public static void Connect(string userName)
         {
             _userName = userName;
@@ -55,43 +85,16 @@ namespace ChatApp.Core
 
                 connectDone.WaitOne();
             }
-            catch(Exception eee)
+            catch (Exception eee)
             {
                 MessageBox.Show(eee.ToString());
             }
         }
 
         /// <summary>
-        /// Returns IPv4 address that has a default gateway
+        /// Callback received from server when attempting to connect
         /// </summary>
-        /// <returns></returns>
-        private static string GetLocalIpAddress()
-        {
-            foreach (var netI in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (netI.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (netI.NetworkInterfaceType != NetworkInterfaceType.Ethernet || netI.OperationalStatus != OperationalStatus.Up))
-                    continue;
-
-                foreach (var uniIpAddrInfo in netI.GetIPProperties().UnicastAddresses.Where(x => netI.GetIPProperties().GatewayAddresses.Count > 0))
-                {
-                    if (uniIpAddrInfo.Address.AddressFamily == AddressFamily.InterNetwork && uniIpAddrInfo.AddressPreferredLifetime != uint.MaxValue)
-                        return uniIpAddrInfo.Address.ToString();
-                }
-            }
-
-            Console.WriteLine("You local IPv4 address couldn't be found...");
-            return null;
-        }
-
-        public static void SendMessage(Message message)
-        {
-            string messageString = message.BuildTcpString();
-
-            // Send data to the server
-            Send(_client, messageString);
-            sendDone.WaitOne();
-        }
-
+        /// <param name="ar"></param>
         private static void ConnectCallback(IAsyncResult ar)
         {
             try
@@ -110,7 +113,7 @@ namespace ChatApp.Core
                 Receive(client);
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // Close the socket as we are not processing any further
                 _client.Close();
@@ -139,6 +142,10 @@ namespace ChatApp.Core
             client.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReceiveCallback), state);
         }
 
+        /// <summary>
+        /// Run after the server has acknowledged our receive request
+        /// </summary>
+        /// <param name="ar"></param>
         private static void ReceiveCallback(IAsyncResult ar)
         {
             string content = string.Empty;
@@ -185,6 +192,11 @@ namespace ChatApp.Core
             }
         }
 
+        /// <summary>
+        /// Begins sending data to the server
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="data"></param>
         private static void Send(Socket client, string data)
         {
             //Append end of file tag to data
@@ -197,6 +209,10 @@ namespace ChatApp.Core
             client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), client);
         }
 
+        /// <summary>
+        /// Run when server has acknowledged our send request
+        /// </summary>
+        /// <param name="ar"></param>
         private static void SendCallback(IAsyncResult ar)
         {
             try
@@ -226,5 +242,56 @@ namespace ChatApp.Core
                 throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
+
+        #endregion
+
+        #region Helper Functions
+
+        /// <summary>
+        /// Returns IPv4 address that has a default gateway
+        /// </summary>
+        /// <returns></returns>
+        private static string GetLocalIpAddress()
+        {
+            foreach (var netI in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (netI.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (netI.NetworkInterfaceType != NetworkInterfaceType.Ethernet || netI.OperationalStatus != OperationalStatus.Up))
+                    continue;
+
+                foreach (var uniIpAddrInfo in netI.GetIPProperties().UnicastAddresses.Where(x => netI.GetIPProperties().GatewayAddresses.Count > 0))
+                {
+                    if (uniIpAddrInfo.Address.AddressFamily == AddressFamily.InterNetwork && uniIpAddrInfo.AddressPreferredLifetime != uint.MaxValue)
+                        return uniIpAddrInfo.Address.ToString();
+                }
+            }
+
+            Console.WriteLine("You local IPv4 address couldn't be found...");
+            return null;
+        }
+
+        /// <summary>
+        /// Processes and sends a <see cref="Message"/>
+        /// </summary>
+        /// <param name="message"></param>
+        public static void SendMessage(Message message)
+        {
+            // Converts a Message object to a string
+            string messageString = message.BuildTcpString();
+
+            // Send data to the server
+            Send(_client, messageString);
+            sendDone.WaitOne();
+        }
+
+        #endregion
+
+
+
+
+
+
+
+
+
     }
 }
