@@ -284,14 +284,5 @@ namespace ChatApp.Core
         }
 
         #endregion
-
-
-
-
-
-
-
-
-
     }
 }

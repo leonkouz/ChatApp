@@ -47,10 +47,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatClient\ChatClient.cs" />
+    <Compile Include="Client\ChatClient.cs" />
     <Compile Include="Enums\DataPrefixes.cs" />
-    <Compile Include="ChatClient\Message.cs" />
-    <Compile Include="ChatClient\StateObject.cs" />
+    <Compile Include="Client\Message.cs" />
+    <Compile Include="Client\StateObject.cs" />
     <Compile Include="DataModel\ApplicationPage.cs" />
     <Compile Include="Enums\EnumExtensions.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
