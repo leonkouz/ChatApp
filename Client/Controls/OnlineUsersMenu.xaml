@@ -25,7 +25,7 @@
 
                         <TextBlock 
                         HorizontalAlignment="Center"
-                        FontSize="{StaticResource FontSizeLarge}" 
+                        FontSize="{StaticResource FontSizeXXLarge}" 
                         FontFamily="{StaticResource LatoRegular}"
                         Foreground="{StaticResource ForegroundDarkBlueBrush}"
                         Text="Online Users" />

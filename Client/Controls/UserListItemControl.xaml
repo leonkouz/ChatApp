@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:ChatApp"
              xmlns:core="clr-namespace:ChatApp.Core;assembly=ChatApp.Core"
              mc:Ignorable="d" 
-             Height="60"
-             d:DesignHeight="60" d:DesignWidth="300">
+             d:DesignWidth="300">
 
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
@@ -26,9 +25,12 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Profile picture padding -->
-                            <Border Grid.Column="0" Padding="8">
+                            <Border Grid.Column="0" 
+                                    Padding="8 15"
+                                    >
                                 <!-- Profile picture background-->
                                 <Border Background="{Binding Colour, Converter={local:StringRGBToBrushConvert}}"
+                                        Height="40"
                                         Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                                         CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
                                     <!-- Profile picture intials-->
@@ -36,7 +38,7 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 Foreground="{StaticResource ForegroundLightBrush}"
-                                                FontSize="{StaticResource FontSizeAverage}"
+                                                FontSize="{StaticResource FontSizeLarge}"
                                                 FontFamily="{StaticResource LatoRegular}"/>
                                 </Border>
                             </Border>
@@ -46,14 +48,16 @@
                                 <StackPanel VerticalAlignment="Center">
                                     <!-- Name -->
                                     <TextBlock Text="{Binding Name}"
-                                                Foreground="{Binding Colour, Converter={local:StringRGBToBrushConvert}}"
-                                                TextTrimming="CharacterEllipsis"
-                                                FontFamily="{StaticResource LatoRegular}"/>
+                                               Padding="0 0 0 2"
+                                               Foreground="{Binding Colour, Converter={local:StringRGBToBrushConvert}}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"/>
                                     <!-- Message -->
                                     <TextBlock Text="{Binding StatusMessage}"
-                                                Foreground="{StaticResource ForegroundBrush}"
-                                                TextTrimming="CharacterEllipsis"
-                                                FontFamily="{StaticResource LatoRegular}"/>
+                                               Padding="0 2 0 0"
+                                               Foreground="{StaticResource ForegroundBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"/>
                                 </StackPanel>
                             </Border>
 

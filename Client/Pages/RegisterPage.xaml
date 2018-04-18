@@ -30,7 +30,7 @@
 
                             <!-- Login header -->
                             <TextBlock Text="Sign Up" 
-                                   FontSize="{StaticResource FontSizeLarge}" 
+                                   FontSize="{StaticResource FontSizeXXLarge}" 
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource ForegroundDarkBlueBrush}"
                                    Margin="0 0 0 20"
