@@ -77,14 +77,12 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => LoginIsRunning, async () =>
             {
-
                 await Task.Delay(1000);
 
                 // Go to chat page
                 IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
 
                 ChatClient.Connect("test");
-
                 
                 /*
                 var email = Email;

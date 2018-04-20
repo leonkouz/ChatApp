@@ -9,6 +9,6 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="ChatPage">
     <Grid>
-        
+        <local:ChatMessageListControl />
     </Grid>
 </local:BasePage>

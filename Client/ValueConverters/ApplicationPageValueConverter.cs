@@ -27,7 +27,7 @@ namespace ChatApp
                     return new RegisterPage();
 
                 case ApplicationPage.GlobalChat:
-                    return new GlobalChatPage();
+                    return new ChatPage();
 
                 default:
                     Debugger.Break();
