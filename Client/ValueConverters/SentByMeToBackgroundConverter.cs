@@ -10,16 +10,14 @@ using System.Windows;
 namespace ChatApp
 {
     /// <summary>
-    /// A converter that takes in a boolean and returns a <see cref="Visiblity"/>
+    /// A converter that takes in a boolean if a message was sent by me, and returns the 
+    /// correct background colour
     /// </summary>
-    public class BooleanToVisiblityConverter : BaseValueConverter<BooleanToVisiblityConverter>
+    public class SentByMeToBackgroundConverter : BaseValueConverter<SentByMeToBackgroundConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(parameter == null)
-                return (bool)value ? Visibility.Hidden : Visibility.Visible;
-            else
-                return (bool)value ? Visibility.Visible : Visibility.Hidden;
+            return (bool)value ? Application.Current.FindResource("ChatBubbleBlueBrush") : Application.Current.FindResource("ForegroundLightBrush");
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
