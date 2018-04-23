@@ -37,7 +37,6 @@ namespace ChatApp
         /// </summary>
         public static Parent Instance { get; private set; } = new Parent();
 
-
         #endregion
 
         #region AttachedPropertyDefinitions

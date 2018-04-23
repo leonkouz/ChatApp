@@ -16,13 +16,13 @@ namespace ChatApp.Core
         /// <summary>
         /// The current page displayed in the window
         /// </summary>
-        private ApplicationPage _currentPage = ApplicationPage.Login;
+        private ApplicationPage _currentPage = ApplicationPage.GlobalChat;
 
 
         /// <summary>
         /// Indicites whether the side menu should be shown
         /// </summary>
-        private bool _sideMenuVisible = false;
+        private bool _sideMenuVisible = true;
 
         #endregion
 
@@ -68,8 +68,6 @@ namespace ChatApp.Core
             // Show side menu or not
             if (page == ApplicationPage.GlobalChat)
                 SideMenuVisible = true;
-
         }
-
     }
 }

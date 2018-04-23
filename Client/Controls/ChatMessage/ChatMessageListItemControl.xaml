@@ -7,7 +7,6 @@
              xmlns:core="clr-namespace:ChatApp.Core;assembly=ChatApp.Core"             
              mc:Ignorable="d" d:DesignWidth="300">
     <Border Padding="5" 
-            Background="{StaticResource ForegroundDarkBlueBrush}"
             d:DataContext="{x:Static core:ChatMessageListItemDesignModel.Instance}"
             >
         
@@ -69,6 +68,7 @@
 
                             <!-- User's name text-->
                             <TextBlock Grid.Column="0"
+                                       Visibility="Collapsed"
                                        Foreground="{StaticResource ForegroundBrush}"
                                        FontFamily="{StaticResource LatoRegular}"
                                        FontSize="{StaticResource FontSizeSmaller}"
@@ -77,12 +77,13 @@
 
                             <!-- Timestamp text -->
                             <TextBlock Grid.Column="1" 
-                                       Margin="5 0 0 0"
+                                       Margin="0 0 0 0"
                                        Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}"
                                        Foreground="{StaticResource ForegroundBrush}"
                                        FontFamily="{StaticResource LatoRegular}"
                                        FontSize="{StaticResource FontSizeSmaller}"
                                        VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
                                        />
                         </Grid>
 
