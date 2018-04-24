@@ -32,5 +32,7 @@
     <system:Double x:Key="FontSizeXXLarge">30</system:Double>
 
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
+    <system:String x:Key="FontAwesomeSearchIcon">&#xf002;</system:String>
+    <system:String x:Key="FontAwesomeElipsesVerticalIcon">&#xf142;</system:String>
 
 </ResourceDictionary>

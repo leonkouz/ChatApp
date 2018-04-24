@@ -9,6 +9,38 @@
       d:DesignHeight="300" d:DesignWidth="300"
       >
     <Grid>
-        <local:ChatMessageListControl />
+
+        <Grid.RowDefinitions>
+            <!-- Menu bar -->
+            <RowDefinition Height="Auto"/>
+            
+            <!-- Chat List -->
+            <RowDefinition Height="*"/>
+            
+            <!-- Message send text box -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu bar -->
+        <Grid Height="50">
+
+            <StackPanel Orientation="Horizontal">
+                
+                <Button Content="{StaticResource FontAwesomeElipsesVerticalIcon}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"        
+                        Width="50"
+                        Style="{StaticResource IconButton}"/>
+                <Button Content="{StaticResource FontAwesomeSearchIcon}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"         
+                        Width="50"
+                        Style="{StaticResource IconButton}"/>
+                
+            </StackPanel>
+            
+        </Grid>
+        
+        <local:ChatMessageListControl Grid.Row="1" />
     </Grid>
 </local:BasePage>

@@ -17,10 +17,9 @@
     <Color x:Key="ForegroundLight">#ffffff</Color>
     <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}"/>
 
-    <Color x:Key="WordVeryLightBlue">#ecf6fb</Color>
-    <SolidColorBrush x:Key="WordVeryLightBlueBrush" Color="{StaticResource WordVeryLightBlue}"/>
-
-
+    <Color x:Key="VeryLightBlue">#ecf6fb</Color>
+    <SolidColorBrush x:Key="VeryLightBlueBrush" Color="{StaticResource VeryLightBlue}"/>
+    
     <!-- Colour inspiration https://dribbble.com/shots/4099697-Robbie-Chatbot -->
     
     <Color x:Key="ChatBubbleBlue">#56D3F1</Color>
@@ -28,7 +27,13 @@
 
     <Color x:Key="ForegroundDarkBlue">#2A2F80</Color>
     <SolidColorBrush x:Key="ForegroundDarkBlueBrush" Color="{StaticResource ForegroundDarkBlue}"/>
-    
+
+    <Color x:Key="ForegroundLightBlue">#696da6</Color>
+    <SolidColorBrush x:Key="ForegroundLightBlueBrush" Color="{StaticResource ForegroundLightBlue}"/>
+
+    <Color x:Key="ForegroundTransparentDarkBlue">#002A2F80</Color>
+    <SolidColorBrush x:Key="ForegroundTransparentDarkBlueBrush" Color="{StaticResource ForegroundTransparentDarkBlue}"/>
+
     <Color x:Key="ChatBackground">#D5EAF1</Color>
     <SolidColorBrush x:Key="ChatBackgroundBrush" Color="{StaticResource ChatBackground}"/>
 

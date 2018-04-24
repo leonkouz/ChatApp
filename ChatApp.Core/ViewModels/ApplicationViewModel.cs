@@ -16,13 +16,13 @@ namespace ChatApp.Core
         /// <summary>
         /// The current page displayed in the window
         /// </summary>
-        private ApplicationPage _currentPage = ApplicationPage.GlobalChat;
+        private ApplicationPage _currentPage = ApplicationPage.Login;
 
 
         /// <summary>
         /// Indicites whether the side menu should be shown
         /// </summary>
-        private bool _sideMenuVisible = true;
+        private bool _sideMenuVisible = false;
 
         #endregion
 
