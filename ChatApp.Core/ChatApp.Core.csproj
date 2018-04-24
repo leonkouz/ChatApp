@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Client\ChatClient.cs" />
     <Compile Include="Enums\DataPrefixes.cs" />
-    <Compile Include="Client\Message.cs" />
+    <Compile Include="Client\Models\Message.cs" />
     <Compile Include="Client\StateObject.cs" />
     <Compile Include="DataModel\ApplicationPage.cs" />
     <Compile Include="Enums\EnumExtensions.cs" />

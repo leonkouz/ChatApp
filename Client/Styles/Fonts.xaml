@@ -34,5 +34,7 @@
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomeSearchIcon">&#xf002;</system:String>
     <system:String x:Key="FontAwesomeElipsesVerticalIcon">&#xf142;</system:String>
+    <system:String x:Key="FontAwesomePaperclipIcon">&#xf0c6;</system:String>
+    <system:String x:Key="FontAwesomeEmojiIcon">&#xf118;</system:String>
 
 </ResourceDictionary>

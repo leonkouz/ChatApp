@@ -44,7 +44,7 @@ namespace ChatApp
         /// <summary>
         /// The smallest width the window can go to
         /// </summary>
-        public double WindowMinimumWidth { get; set; } = 800;
+        public double WindowMinimumWidth { get; set; } = 900;
 
         /// <summary>
         /// The smallest height the window can go to
