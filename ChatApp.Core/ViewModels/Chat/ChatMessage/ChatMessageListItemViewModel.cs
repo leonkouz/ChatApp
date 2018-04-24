@@ -42,6 +42,11 @@ namespace ChatApp.Core
         public bool SentByMe { get; set; }
 
         /// <summary>
+        /// True if the server returns a message sent confirmation
+        /// </summary>
+        public bool MessageSendSuccessfull { get; set; }
+
+        /// <summary>
         /// The time the message was sent
         /// </summary>
         public DateTimeOffset MessageSentTime { get; set; }
