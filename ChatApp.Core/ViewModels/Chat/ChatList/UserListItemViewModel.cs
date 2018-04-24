@@ -12,9 +12,24 @@ namespace ChatApp.Core
     public class UserListItemViewModel : BaseViewModel
     {
         /// <summary>
+        /// The user id
+        /// </summary>
+        private string ID { get; set; }
+
+        /// <summary>
         /// The display name of the user
         /// </summary>
-        public string Name { get; set; }
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// The first name of the user
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// The last name of the user
+        /// </summary>
+        public string LastName { get; set; }
 
         /// <summary>
         /// The status message of the user
@@ -25,6 +40,11 @@ namespace ChatApp.Core
         /// The intiails of the user
         /// </summary>
         public string Initials { get; set; }
+
+        /// <summary>
+        /// True if the user is online
+        /// </summary>
+        public bool Online { get; set; }
 
         /// <summary>
         /// The colour (in hex) the user selected

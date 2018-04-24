@@ -9,33 +9,37 @@ using System.Threading;
 using System.ServiceModel.Channels;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Data.SQLite;
 
 namespace ChatServer
 {
     //https://docs.microsoft.com/en-us/dotnet/framework/network-programming/using-an-asynchronous-server-socket
 
-
     public class Server
     {
-        readonly int _port;
-        readonly IPAddress _ipAddress;
-        IPEndPoint _endPoint;
+        private readonly int _port;
+        private readonly IPAddress _ipAddress;
+        private IPEndPoint _endPoint;
+        
+        private Socket _listener;
+        
+        private ManualResetEvent allDone = new ManualResetEvent(false);
+        
+        private List<Socket> clientList = new List<Socket>();
+        
+        private List<string> chatLog = new List<string>();
 
-        Socket _listener;
-
-        ManualResetEvent allDone = new ManualResetEvent(false);
-
-        List<Socket> clientList = new List<Socket>();
-
-        List<string> chatLog = new List<string>();
+        private SQLDatabase _database;
 
         /// <summary>
-        /// Initialises the server
+        /// Opens the database and initialises the server
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
         public Server(IPAddress ip, int port)
         {
+            _database = new SQLDatabase();
+
             _port = port;
             _ipAddress = IPAddress.Any;
 
