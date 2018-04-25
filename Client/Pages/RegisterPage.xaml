@@ -36,10 +36,19 @@
                                    Margin="0 0 0 20"
                                    />
 
+                            <!-- First name -->
+                            <TextBox Text="{Binding FirstName}" 
+                                     Tag="First Name"
+                                     local:IsFocusedProperty.Value="True"
+                                     />
+                            <!-- Last name -->
+                            <TextBox Text="{Binding LastName}" 
+                                     Tag="Last Name"
+                                     />
+                            
                             <!-- Email -->
                             <TextBox Text="{Binding Email}" 
                                      Tag="Email"
-                                     local:IsFocusedProperty.Value="True"
                                      />
 
                             <!-- Password -->

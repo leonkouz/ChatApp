@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatServer.Core;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -83,7 +84,7 @@ namespace ChatApp.Core
                 IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
 
                 ChatClient.Connect("test");
-                
+
                 /*
                 var email = Email;
                 var pass = (parameter as IHavePassword).SecurePassword.Unsecure(); // MUST CHANGE! NEVER STORE UNSECURE PASSWORD IN VARIABLE, PASS DIRECTLY TO METHOD*/

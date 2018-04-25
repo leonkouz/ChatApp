@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Text;
 
-namespace ChatApp.Core
+namespace ChatServer.Core
 {
+    /// <summary>
+    /// The message model for the TCP client
+    /// </summary>
     public class Message
     {
         private string _content;
         private DateTime _timeStamp;
-        private string _user = ChatClient.UserName;
-
-        private static string delimiter = "\0"; //this character is used as it cannot be typed by a user
 
         /// <summary>
         /// The content of this message
@@ -52,10 +52,10 @@ namespace ChatApp.Core
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(_content);
-            sb.Append(delimiter);
+            sb.Append(Constants.Delimiter);
             sb.Append(_timeStamp);
-            sb.Append(delimiter);
-            sb.Append(_user);
+            sb.Append(Constants.Delimiter);
+            //sb.Append(_user);
 
 
             foreach (var propertyInfo in GetType().GetProperties())
@@ -69,7 +69,7 @@ namespace ChatApp.Core
 
         public static Message BuildMessageFromTcpString(string tcpString)
         {
-            string[] result = tcpString.Split(new string[] { delimiter }, StringSplitOptions.None);
+            string[] result = tcpString.Split(new string[] { Constants.Delimiter }, StringSplitOptions.None);
 
             string content = result[0];
 

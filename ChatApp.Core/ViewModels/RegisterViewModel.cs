@@ -10,16 +10,29 @@ namespace ChatApp.Core
     {
         #region Private Fields
 
-        private bool _registerIsRunning;
-
-        #endregion
-
-        #region Public Properties
+        /// <summary>
+        /// A flag indicating if the login command is running
+        /// </summary>
+        private bool _registerIsRunning = false;
 
         /// <summary>
         /// The email of the user
         /// </summary>
-        public string Email { get; set; }
+        private string _email;
+
+        /// <summary>
+        /// The first name of the user
+        /// </summary>
+        private string _firstName;
+
+        /// <summary>
+        /// The last name of the user
+        /// </summary>
+        private string _lastName;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// A flag indicating if the login command is running
@@ -32,7 +45,45 @@ namespace ChatApp.Core
                 _registerIsRunning = value;
                 RaisePropertyChangedEvent("RegisterIsRunning");
             }
+        }
 
+        /// <summary>
+        /// The email of the user
+        /// </summary>
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                _email = value;
+                RaisePropertyChangedEvent("Email");
+            }
+        }
+
+        /// <summary>
+        /// The first name of the user
+        /// </summary>
+        public string FirstName
+        {
+            get { return _firstName; }
+            set
+            {
+                _firstName = value;
+                RaisePropertyChangedEvent("FirstName");
+            }
+        }
+
+        /// <summary>
+        /// The last name of the user
+        /// </summary>
+        public string LastName
+        {
+            get { return _lastName; }
+            set
+            {
+                _lastName = value;
+                RaisePropertyChangedEvent("LastName");
+            }
         }
 
         #endregion
@@ -74,7 +125,28 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
-                await Task.Delay(5000);
+                // Create user
+                UserListItemViewModel user = new UserListItemViewModel 
+                {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                    Email = this.Email,
+                    Password = (parameter as IHavePassword).SecurePassword,
+                };
+
+                // Attempt to register user
+                var response = await ChatClient.RegisterUser(user);
+
+                if(!response == true)
+                {
+                    //show error
+                }
+                else
+                {
+                    IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
+                }
+
+                //await Task.Delay(5000);
             });
         }
 

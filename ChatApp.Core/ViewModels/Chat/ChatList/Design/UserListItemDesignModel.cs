@@ -26,8 +26,8 @@ namespace ChatApp.Core
         /// </summary>
         public UserListItemDesignModel()
         {
-            Initials = "LM";
-            Name = "Luke";
+            FirstName = "Jessie";
+            LastName = "Jones";
             StatusMessage = "This is my status message";
             Colour = "3099c5";
         }

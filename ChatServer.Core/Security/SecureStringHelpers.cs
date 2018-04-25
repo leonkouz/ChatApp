@@ -6,7 +6,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp.Core
+namespace ChatServer.Core
 {
     /// <summary>
     /// Helpers for the <see cref="SecureString"/> class
@@ -39,8 +39,6 @@ namespace ChatApp.Core
                 // Clean up any memory allocation
                 Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
             }
-
         }
-
     }
 }

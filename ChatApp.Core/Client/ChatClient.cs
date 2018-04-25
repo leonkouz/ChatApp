@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ChatServer;
+using ChatServer.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -281,6 +283,13 @@ namespace ChatApp.Core
             // Send data to the server
             Send(_client, messageString);
             sendDone.WaitOne();
+        }
+
+        public static async Task<bool> RegisterUser(UserListItemViewModel user)
+        {
+
+
+            return false;
         }
 
         #endregion

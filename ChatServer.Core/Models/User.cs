@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ChatApp.Core
+namespace ChatServer.Core
 {
     /// <summary>
-    /// A view model for each chat list item in the overview chat list
+    /// The User model for the TCP client
     /// </summary>
-    public class UserListItemViewModel : BaseViewModel
+    public class User
     {
-        #region Public Properties
-
         /// <summary>
         /// The user id
         /// </summary>
@@ -32,7 +27,7 @@ namespace ChatApp.Core
         /// <summary>
         /// The password of the user
         /// </summary>
-        public SecureString Password { get; set; }
+        public SecureString Password { get; }
 
         /// <summary>
         /// The full name of the user
@@ -69,9 +64,7 @@ namespace ChatApp.Core
         /// </summary>
         public string Colour { get; set; }
 
-        #endregion
-
-        #region Helper Methods
+        #region Helper Functions
 
         /// <summary>
         /// Gets the initials of the name
@@ -84,7 +77,23 @@ namespace ChatApp.Core
             return (firstName.First() + lastName.First()).ToString();
         }
 
+        public string BuildTcpString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(UserName);
+            sb.Append(Constants.Delimiter);
+            sb.Append(Email);
+            sb.Append(Constants.Delimiter);
+            sb.Append(Password.Unsecure());
+
+            return sb.ToString();
+
+        }
+
         #endregion
+
+
+
 
     }
 }

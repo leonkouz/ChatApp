@@ -31,80 +31,80 @@ namespace ChatApp.Core
             {
                 new UserListItemViewModel
                 {
-                    Name = "Luke",
-                    Initials = "LM",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "3099c5"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Jess",
-                    Initials = "JA",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "fe4503"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Mark",
-                    Initials = "ML",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "00d405"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Luke",
-                    Initials = "LM",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "3099c5"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Jess",
-                    Initials = "JA",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "fe4503"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Mark",
-                    Initials = "ML",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "00d405"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Mark",
-                    Initials = "ML",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "00d405"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Luke",
-                    Initials = "LM",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "3099c5"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Jess",
-                    Initials = "JA",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "fe4503"
                 },
 
                 new UserListItemViewModel
                 {
-                    Name = "Mark",
-                    Initials = "ML",
+                    FirstName = "Jessie",
+                    LastName = "Jones",
                     StatusMessage = "this is my status message",
                     Colour = "00d405"
                 }

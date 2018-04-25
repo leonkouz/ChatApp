@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace ChatServer
 {
@@ -21,7 +12,5 @@ namespace ChatServer
             Server server = new Server(ip, port);
             server.Start();
         }
-
-        
     }
 }
