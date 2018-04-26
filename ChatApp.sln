@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{DB2F30
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Core", "ChatApp.Core\ChatApp.Core.csproj", "{C350A51C-1802-49AF-ABFE-AB82E69513B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer.Core", "ChatServer.Core\ChatServer.Core.csproj", "{334B28D2-5412-4C73-B5A5-BB49D843236C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer.Shared", "ChatServer.Core\ChatServer.Shared.csproj", "{334B28D2-5412-4C73-B5A5-BB49D843236C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace ChatServer.Core
+namespace ChatServer.Shared
 {
     /// <summary>
     /// The message model for the TCP client

@@ -1,4 +1,4 @@
-﻿using ChatServer.Core;
+﻿using ChatServer.Shared;
 using System;
 using System.Threading.Tasks;
 using System.Windows;

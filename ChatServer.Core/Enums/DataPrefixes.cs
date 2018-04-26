@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp.Core
+namespace ChatServer.Shared
 {
     /// <summary>
     /// Prefixes to add to the beginning of TCP strings to indicate what the data is for.

@@ -6,7 +6,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatServer.Core
+namespace ChatServer.Shared
 {
     /// <summary>
     /// Helpers for the <see cref="SecureString"/> class

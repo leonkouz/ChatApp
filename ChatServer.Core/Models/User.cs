@@ -2,7 +2,7 @@
 using System.Security;
 using System.Text;
 
-namespace ChatServer.Core
+namespace ChatServer.Shared
 {
     /// <summary>
     /// The User model for the TCP client

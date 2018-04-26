@@ -10,7 +10,7 @@ using System.ServiceModel.Channels;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Data.SQLite;
-using ChatServer.Core;
+using ChatServer.Shared;
 
 namespace ChatServer
 {

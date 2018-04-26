@@ -78,9 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChatServer.Core\ChatServer.Core.csproj">
+    <ProjectReference Include="..\ChatServer.Core\ChatServer.Shared.csproj">
       <Project>{334b28d2-5412-4c73-b5a5-bb49d843236c}</Project>
-      <Name>ChatServer.Core</Name>
+      <Name>ChatServer.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
