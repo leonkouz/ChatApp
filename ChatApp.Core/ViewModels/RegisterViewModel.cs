@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using ChatServer.Shared;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ChatApp.Core
@@ -125,8 +126,12 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
+                
+
+                ChatClient.Connect();
+
                 // Create user
-                UserListItemViewModel user = new UserListItemViewModel 
+                User user = new User
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
@@ -137,6 +142,7 @@ namespace ChatApp.Core
                 // Attempt to register user
                 var response = await ChatClient.RegisterUser(user);
 
+                // If attempt to register user was not succesfful
                 if(!response == true)
                 {
                     //show error
@@ -146,7 +152,6 @@ namespace ChatApp.Core
                     IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
                 }
 
-                //await Task.Delay(5000);
             });
         }
 
@@ -157,7 +162,7 @@ namespace ChatApp.Core
         /// <returns></returns>
         public async Task LoginAsync()
         {
-            // TODO: Go to register page
+            // Go to login page
             IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
 
             await Task.Delay(1);

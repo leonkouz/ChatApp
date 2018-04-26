@@ -15,7 +15,8 @@ namespace ChatServer.Shared
         [Description("-msg")]
         Message = 0,
 
+        [Description("-reguser")]
+        RegisterUser = 1,
 
     }
-
 }

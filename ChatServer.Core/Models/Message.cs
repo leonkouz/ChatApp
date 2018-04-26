@@ -14,7 +14,6 @@ namespace ChatServer.Shared
         /// <summary>
         /// The content of this message
         /// </summary>
-
         public string Content
         {
             get { return _content; }
@@ -24,7 +23,6 @@ namespace ChatServer.Shared
         /// <summary>
         /// The time this message was sent
         /// </summary>
-
         public DateTime TimeStamp
         {
             get { return _timeStamp; }

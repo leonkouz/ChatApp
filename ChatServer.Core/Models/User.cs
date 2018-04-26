@@ -27,7 +27,7 @@ namespace ChatServer.Shared
         /// <summary>
         /// The password of the user
         /// </summary>
-        public SecureString Password { get; }
+        public SecureString Password { get; set; }
 
         /// <summary>
         /// The full name of the user
@@ -77,12 +77,18 @@ namespace ChatServer.Shared
             return (firstName.First() + lastName.First()).ToString();
         }
 
-        public string BuildTcpString()
+        /// <summary>
+        /// Concatenates user information to send to the server in order to register user
+        /// </summary>
+        /// <returns></returns>
+        public string BuildRegisterUserTcpString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(UserName);
-            sb.Append(Constants.Delimiter);
             sb.Append(Email);
+            sb.Append(Constants.Delimiter);
+            sb.Append(FirstName);
+            sb.Append(Constants.Delimiter);
+            sb.Append(LastName);
             sb.Append(Constants.Delimiter);
             sb.Append(Password.Unsecure());
 

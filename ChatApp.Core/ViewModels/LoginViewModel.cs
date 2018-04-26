@@ -83,7 +83,9 @@ namespace ChatApp.Core
                 // Go to chat page
                 IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
 
-                ChatClient.Connect("test");
+                ChatClient.Connect();
+                
+                
 
                 /*
                 var email = Email;

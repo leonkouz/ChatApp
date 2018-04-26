@@ -25,6 +25,8 @@ namespace ChatApp.Core
         private static ManualResetEvent sendDone = new ManualResetEvent(false);
         private static ManualResetEvent receiveDone = new ManualResetEvent(false);
 
+        private static ManualResetEvent userRegisteredDone = new ManualResetEvent(false);
+
         //private static IPHostEntry _ipHostInfo;
 
         /// <summary>
@@ -47,16 +49,12 @@ namespace ChatApp.Core
         /// </summary>
         private static Socket _client;
 
-        /// <summary>
-        /// The users name
-        /// </summary>
-        private static string _userName;
-
         #endregion
 
         #region Public Properties
 
-        public static string UserName => _userName;
+
+        public static bool Connected => _client != null ? true : false;
 
         #endregion
 
@@ -66,10 +64,8 @@ namespace ChatApp.Core
         /// Connects to the chat server
         /// </summary>
         /// <param name="userName"></param>
-        public static void Connect(string userName)
+        public static void Connect()
         {
-            _userName = userName;
-
             try
             {
                 string ipv4Address = GetLocalIpAddress(); // Replace with external IP for remote connections
@@ -113,7 +109,6 @@ namespace ChatApp.Core
                 connectDone.Set();
 
                 Receive(client);
-
             }
             catch (Exception e)
             {
@@ -124,8 +119,6 @@ namespace ChatApp.Core
                 connectDone.Set();
 
                 MessageBox.Show(e.ToString());
-
-                //throw new Exception(e.GetType().ToString() + e.Message);
             }
         }
 
@@ -174,11 +167,11 @@ namespace ChatApp.Core
                     if (content.IndexOf("<EOF>") > -1)
                     {
                         //Rebuild message object
-                        Message message = Message.BuildMessageFromTcpString(content);
+                        //Message message = Message.BuildMessageFromTcpString(content);
 
                         //Raise message received event
-                        MessageReceivedEventArgs args = Message.BuildMessageReceivedEvent(message);
-                        message.OnMessageReceived(args);
+                       // MessageReceivedEventArgs args = Message.BuildMessageReceivedEvent(message);
+                        //message.OnMessageReceived(args);
 
                         //Removes previous data received
                         state.DeleteData();
@@ -247,6 +240,24 @@ namespace ChatApp.Core
 
         #endregion
 
+        #region Events
+
+        /// <summary>
+        /// Event to indicate a user has been registered
+        /// </summary>
+        private static event EventHandler UserRegistered;
+
+        /// <summary>
+        /// Raises UserRegistered event
+        /// </summary>
+        private void OnUserRegistered(EventArgs e)
+        {
+            UserRegistered?.Invoke(this, e);
+        }
+
+
+        #endregion
+
         #region Helper Functions
 
         /// <summary>
@@ -285,12 +296,44 @@ namespace ChatApp.Core
             sendDone.WaitOne();
         }
 
-        public static async Task<bool> RegisterUser(UserListItemViewModel user)
+        #region Register User
+
+        /// <summary>
+        /// Sends a request to the server to register a user
+        /// </summary>
+        /// <param name="user">The user to register</param>
+        /// <returns></returns>
+        public static async Task<bool> RegisterUser(User user)
         {
+            await Task.Run(() =>
+            {
+                // Listen for user registered event
+                UserRegistered += ChatClient_UserRegistered;
 
+                string tcpString = user.BuildRegisterUserTcpString();
 
-            return false;
+                // Send data to server and wait
+                Send(_client, tcpString);
+                sendDone.WaitOne();
+
+                // Wait until server response to register user
+                while (!userRegisteredDone.WaitOne(0))
+                {
+                    Thread.SpinWait(1000);
+                }
+            });
+
+            return true;
         }
+
+        private static void ChatClient_UserRegistered(object sender, EventArgs e)
+        {
+            userRegisteredDone.Set();
+        }
+
+        #endregion
+
+
 
         #endregion
     }

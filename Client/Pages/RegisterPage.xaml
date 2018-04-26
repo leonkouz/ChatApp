@@ -38,21 +38,27 @@
 
                             <!-- First name -->
                             <TextBox Text="{Binding FirstName}" 
+                                     IsEnabled="{Binding RegisterIsRunning, Converter={local:InverseBoolConverter}}"
                                      Tag="First Name"
                                      local:IsFocusedProperty.Value="True"
                                      />
                             <!-- Last name -->
                             <TextBox Text="{Binding LastName}" 
+                                     IsEnabled="{Binding RegisterIsRunning, Converter={local:InverseBoolConverter}}"
                                      Tag="Last Name"
                                      />
                             
                             <!-- Email -->
                             <TextBox Text="{Binding Email}" 
+                                     IsEnabled="{Binding RegisterIsRunning, Converter={local:InverseBoolConverter}}"
                                      Tag="Email"
                                      />
 
                             <!-- Password -->
-                            <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
+                            <PasswordBox x:Name="PasswordText" 
+                                         IsEnabled="{Binding RegisterIsRunning, Converter={local:InverseBoolConverter}}"
+                                         Tag="Password" 
+                                         Margin="0 0 0 30"/>
 
                             <!-- Register button -->
                             <Button Content="Register" 

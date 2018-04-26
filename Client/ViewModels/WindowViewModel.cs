@@ -49,7 +49,7 @@ namespace ChatApp
         /// <summary>
         /// The smallest height the window can go to
         /// </summary>
-        public double WindowMinimumHeight { get; set; } = 500;
+        public double WindowMinimumHeight { get; set; } = 650;
 
         /// <summary>
         /// True if the window is currently being moved/dragged
