@@ -32,6 +32,16 @@ namespace ChatApp.Core
         /// </summary>
         private string _lastName;
 
+        /// <summary>
+        /// True if an error should be shown
+        /// </summary>
+        private bool _showError = false;
+
+        /// <summary>
+        /// The error to display if <see cref="_showError"/> is true
+        /// </summary>
+        private string _error;
+
         #endregion
 
         #region Public Properties
@@ -41,7 +51,7 @@ namespace ChatApp.Core
         /// </summary>
         public bool RegisterIsRunning
         {
-            get { return _registerIsRunning; }
+            get => _registerIsRunning; 
             set
             {
                 _registerIsRunning = value;
@@ -54,7 +64,7 @@ namespace ChatApp.Core
         /// </summary>
         public string Email
         {
-            get { return _email; }
+            get => _email; 
             set
             {
                 _email = value;
@@ -67,7 +77,7 @@ namespace ChatApp.Core
         /// </summary>
         public string FirstName
         {
-            get { return _firstName; }
+            get => _firstName; 
             set
             {
                 _firstName = value;
@@ -80,11 +90,37 @@ namespace ChatApp.Core
         /// </summary>
         public string LastName
         {
-            get { return _lastName; }
+            get => _lastName; 
             set
             {
                 _lastName = value;
                 RaisePropertyChangedEvent("LastName");
+            }
+        }
+
+        /// <summary>
+        /// True if an error should be shown
+        /// </summary>
+        public bool ShowError
+        {
+            get => _showError;
+            set
+            {
+                _showError = value;
+                RaisePropertyChangedEvent("ShowError");
+            }
+        }
+
+        /// <summary>
+        /// The error to display if <see cref="ShowError"/> is true
+        /// </summary>
+        public string Error
+        {
+            get => _error;
+            set
+            {
+                _error = value;
+                RaisePropertyChangedEvent("Error");
             }
         }
 
@@ -142,10 +178,14 @@ namespace ChatApp.Core
                 var response = await ChatClient.RegisterUser(user);
 
                 // If attempt to register user was not succesfful
-                if(response == StatusCode.Failure)
+                if(response.Status == StatusCode.Failure)
                 {
-                    //show error
+                    //Show error
+                    Error = response.Error;
+                    ShowError = true;
+                    
                 }
+                // otherwise log the user in
                 else
                 {
                     IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);

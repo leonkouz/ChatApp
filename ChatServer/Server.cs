@@ -256,9 +256,16 @@ namespace ChatServer
             }
             if(data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
             {
-                string response = DataPrefix.RegisterUser.GetDescription() + StatusCode.Success + "<EOF>";
+                StringBuilder sb = new StringBuilder();
 
-                Send(client, response);
+                sb.Append(DataPrefix.RegisterUser.GetDescription());
+                sb.Append(Constants.Delimiter);
+                sb.Append(StatusCode.Failure);
+                sb.Append(Constants.Delimiter);
+                sb.Append("Unable to do something");
+                sb.Append(Constants.EndOfFile);
+
+                Send(client, sb.ToString());
 
                 return;
             }

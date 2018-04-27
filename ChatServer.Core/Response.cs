@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChatServer.Core
 {
-    public class RegisterUserEventArgs : EventArgs
+    public class Response
     {
         public StatusCode Status { get; set; }
         public string Error { get; set; }
+
     }
 }

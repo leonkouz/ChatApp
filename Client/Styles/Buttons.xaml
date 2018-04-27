@@ -99,7 +99,7 @@
                             SnapsToDevicePixels="True">
                         <Grid>
                             <TextBlock Text="{TemplateBinding Content}" 
-                                   Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisiblityConverter}}"
+                                   Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:InverseBooleanToVisiblityConverter}}"
                                    Focusable="False" 
                                    FontFamily="{TemplateBinding FontFamily}"
                                    FontSize="{TemplateBinding FontSize}"
@@ -112,7 +112,7 @@
                                        FontSize="{TemplateBinding FontSize}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:BooleanToVisiblityConverter}, ConverterParameter=False}"
+                                       Visibility="{TemplateBinding local:IsBusyProperty.Value, Converter={local:InverseBooleanToVisiblityConverter}, ConverterParameter=False}"
                                 />
                         </Grid>
                         

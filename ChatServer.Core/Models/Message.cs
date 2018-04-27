@@ -39,9 +39,11 @@ namespace ChatServer.Shared
 
         public static MessageReceivedEventArgs BuildMessageReceivedEvent(Message message)
         {
-            MessageReceivedEventArgs args = new MessageReceivedEventArgs();
-            args.Content = message.Content;
-            args.TimeStamp = message.TimeStamp;
+            MessageReceivedEventArgs args = new MessageReceivedEventArgs
+            {
+                Content = message.Content,
+                TimeStamp = message.TimeStamp
+            };
 
             return args;
         }

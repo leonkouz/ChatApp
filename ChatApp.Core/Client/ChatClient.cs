@@ -53,7 +53,7 @@ namespace ChatApp.Core
         /// <summary>
         /// The status code that is returned from the server when registering a user
         /// </summary>
-        private static StatusCode _registerUserStatus;
+        private static Response _registerUserResponse;
 
         #endregion
 
@@ -256,7 +256,6 @@ namespace ChatApp.Core
             UserRegistered?.Invoke(null, e);
         }
 
-
         #endregion
 
         #region Helper Functions
@@ -276,14 +275,16 @@ namespace ChatApp.Core
                 // MessageReceivedEventArgs args = Message.BuildMessageReceivedEvent(message);
                 //message.OnMessageReceived(args);
             }
+
             if (data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
             {
-                // Trims response
-                string response = TrimTcpResponse(DataPrefix.RegisterUser, data);
+                // Trims and splits response
+                string[] response = TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
 
                 RegisterUserEventArgs args = new RegisterUserEventArgs
                 {
-                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), response)
+                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), response[0]),
+                    Error = response[1]
                 };
 
                 // Raise user registered event
@@ -338,7 +339,7 @@ namespace ChatApp.Core
         /// </summary>
         /// <param name="user">The user to register</param>
         /// <returns></returns>
-        public static async Task<StatusCode> RegisterUser(User user)
+        public static async Task<Response> RegisterUser(User user)
         {
             await Task.Run(() =>
             {
@@ -352,6 +353,7 @@ namespace ChatApp.Core
 
                 // Send data to server and wait
                 Send(_client, tcpString);
+
                 sendDone.WaitOne();
 
                 // Wait until server response to register user
@@ -361,7 +363,7 @@ namespace ChatApp.Core
                 }
             });
 
-            return _registerUserStatus;
+            return _registerUserResponse;
         }
 
         /// <summary>
@@ -371,26 +373,32 @@ namespace ChatApp.Core
         /// <param name="e"></param>
         private static void ChatClient_UserRegistered(object sender, RegisterUserEventArgs e)
         {
-            _registerUserStatus = e.Status;
+            _registerUserResponse = new Response
+            {
+                Status = e.Status,
+                Error = e.Error
+            };
+
             userRegisteredDone.Set();
         }
-
-
 
         #endregion
 
         /// <summary>
-        /// Trims a response from the server so the actual data can be used/read.
+        /// Trims a response from the server and splits into an array so the actual data can be used/read.
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="str"></param>
         /// <returns></returns>
-        private static string TrimTcpResponse(DataPrefix prefix, string str)
+        private static string[] TrimAndSplitTcpResponse(DataPrefix prefix, string str)
         {
-            string response = str.TrimStart(prefix.GetDescription().ToCharArray());
+            string response = str.TrimStart(prefix.GetDescription().ToCharArray()).TrimStart(Constants.Delimiter.ToCharArray());
+
             response = response.TrimEnd("<EOF>".ToCharArray());
 
-            return response;
+            string[] responseArray = response.Split(Convert.ToChar(Constants.Delimiter));
+
+            return responseArray;
         }
 
         #endregion

@@ -113,7 +113,7 @@
                                    FontFamily="{StaticResource LatoThin}"
                                    FontSize="{TemplateBinding FontSize}"
                                    Padding="{TemplateBinding Padding}"
-                                   Visibility="{TemplateBinding local:HasTextProperty.Value, Converter={local:BooleanToVisiblityConverter}}"
+                                   Visibility="{TemplateBinding local:HasTextProperty.Value, Converter={local:InverseBooleanToVisiblityConverter}}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                    Foreground="{StaticResource ForegroundVeryDarkBrush}"

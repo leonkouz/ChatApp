@@ -16,7 +16,7 @@
             <Border VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     Margin="0 7.5 0 7.5"
-                    Visibility="{Binding SentByMe, Converter={local:BooleanToVisiblityConverter}}"
+                    Visibility="{Binding SentByMe, Converter={local:InverseBooleanToVisiblityConverter}}"
                     CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Width="35"
