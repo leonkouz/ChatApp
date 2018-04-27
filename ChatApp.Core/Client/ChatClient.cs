@@ -312,6 +312,9 @@ namespace ChatApp.Core
 
                 string tcpString = user.BuildRegisterUserTcpString();
 
+                // Add the data prefix so the server is aware of the type of request
+                tcpString = DataPrefix.RegisterUser.GetDescription() + tcpString;
+
                 // Send data to server and wait
                 Send(_client, tcpString);
                 sendDone.WaitOne();

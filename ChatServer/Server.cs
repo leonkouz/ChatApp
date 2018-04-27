@@ -32,6 +32,8 @@ namespace ChatServer
 
         private SQLDatabase _database;
 
+        #region Constructor
+
         /// <summary>
         /// Opens the database and initialises the server
         /// </summary>
@@ -49,28 +51,13 @@ namespace ChatServer
             _listener = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
         }
 
+        #endregion
+
+        #region Server Communication
+
         /// <summary>
-        /// Returns IPv4 address that has a default gateway
+        /// Initialise the server and begin listening
         /// </summary>
-        /// <returns></returns>
-        public static string GetLocalIpAddress()
-        {
-            foreach (var netI in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (netI.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (netI.NetworkInterfaceType != NetworkInterfaceType.Ethernet || netI.OperationalStatus != OperationalStatus.Up))
-                    continue;
-
-                foreach (var uniIpAddrInfo in netI.GetIPProperties().UnicastAddresses.Where(x => netI.GetIPProperties().GatewayAddresses.Count > 0))
-                {
-                    if (uniIpAddrInfo.Address.AddressFamily == AddressFamily.InterNetwork && uniIpAddrInfo.AddressPreferredLifetime != uint.MaxValue)
-                        return uniIpAddrInfo.Address.ToString();
-                }
-            }
-
-            Console.WriteLine("You local IPv4 address couldn't be found...");
-            return null;
-        }
-
         public void Start()
         {
             try
@@ -80,7 +67,7 @@ namespace ChatServer
 
                 Console.WriteLine("Server has started");
 
-                while(true)
+                while (true)
                 {
                     allDone.Reset();
 
@@ -91,7 +78,7 @@ namespace ChatServer
                     allDone.WaitOne();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
@@ -122,6 +109,10 @@ namespace ChatServer
             clientList.Add(handler);
         }
 
+        /// <summary>
+        /// Run when the server receives a request from a client
+        /// </summary>
+        /// <param name="ar"></param>
         public void ReadCallback(IAsyncResult ar)
         {
             string content = string.Empty;
@@ -135,7 +126,7 @@ namespace ChatServer
                 // Read data from the client socket. 
                 read = handler.EndReceive(ar);
             }
-            catch(SocketException e)
+            catch (SocketException e)
             {
                 //Remove socket from client list
                 clientList.Remove(state.WorkSocket);
@@ -175,24 +166,25 @@ namespace ChatServer
             }
         }
 
-        private void SendDataToAllChatApps(string data)
-        {
-            foreach (var socket in clientList) // Repeat for each connected client (socket held in a dynamic array)
-            {
-                Send(socket, data); // call the above sendMessage function for sending message to a client
-            }
-        }
-
+        /// <summary>
+        /// Sends data to a <see cref="Socket"/>
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <param name="data"></param>
         private void Send(Socket handler, String data)
         {
             // Convert the string data to byte data using ASCII encoding.  
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
             // Begin sending the data to the remote device.  
-            handler.BeginSend(byteData, 0, byteData.Length,0,
+            handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
         }
 
+        /// <summary>
+        /// Run when the client <see cref="Socket"/> has accepted the data
+        /// </summary>
+        /// <param name="ar"></param>
         private void SendCallback(IAsyncResult ar)
         {
             try
@@ -209,5 +201,47 @@ namespace ChatServer
                 Console.WriteLine(e.ToString());
             }
         }
+
+        /// <summary>
+        /// Sends specified data to all currently connected <see cref="Socket"/>
+        /// </summary>
+        /// <param name="data"></param>
+        private void SendDataToAllChatApps(string data)
+        {
+            foreach (var socket in clientList) // Repeat for each connected client (socket held in a dynamic array)
+            {
+                Send(socket, data); // call the above sendMessage function for sending message to a client
+            }
+        }
+
+        #endregion
+
+        #region Helper Functions
+        
+        /// <summary>
+        /// Returns IPv4 address that has a default gateway
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIpAddress()
+        {
+            foreach (var netI in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (netI.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (netI.NetworkInterfaceType != NetworkInterfaceType.Ethernet || netI.OperationalStatus != OperationalStatus.Up))
+                    continue;
+
+                foreach (var uniIpAddrInfo in netI.GetIPProperties().UnicastAddresses.Where(x => netI.GetIPProperties().GatewayAddresses.Count > 0))
+                {
+                    if (uniIpAddrInfo.Address.AddressFamily == AddressFamily.InterNetwork && uniIpAddrInfo.AddressPreferredLifetime != uint.MaxValue)
+                        return uniIpAddrInfo.Address.ToString();
+                }
+            }
+
+            Console.WriteLine("You local IPv4 address couldn't be found...");
+            return null;
+        }
+
+        #endregion
+
+
     }
 }

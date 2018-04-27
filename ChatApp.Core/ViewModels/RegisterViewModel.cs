@@ -126,8 +126,6 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
-                
-
                 ChatClient.Connect();
 
                 // Create user

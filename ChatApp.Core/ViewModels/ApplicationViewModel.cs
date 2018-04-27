@@ -18,7 +18,6 @@ namespace ChatApp.Core
         /// </summary>
         private ApplicationPage _currentPage = ApplicationPage.Login;
 
-
         /// <summary>
         /// Indicites whether the side menu should be shown
         /// </summary>
