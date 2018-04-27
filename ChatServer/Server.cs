@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Data.SQLite;
 using ChatServer.Shared;
+using ChatServer.Core;
 
 namespace ChatServer
 {
@@ -153,7 +154,10 @@ namespace ChatServer
                     //Removes previous data received
                     state.DeleteData();
 
-                    SendDataToAllChatApps(content);
+                    Task.Run(() =>
+                    {
+                        HandleData(content, state.WorkSocket);
+                    });
 
                     //Read more
                     handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
@@ -206,7 +210,7 @@ namespace ChatServer
         /// Sends specified data to all currently connected <see cref="Socket"/>
         /// </summary>
         /// <param name="data"></param>
-        private void SendDataToAllChatApps(string data)
+        private void SendToAllConnctedSockets(string data)
         {
             foreach (var socket in clientList) // Repeat for each connected client (socket held in a dynamic array)
             {
@@ -239,6 +243,29 @@ namespace ChatServer
             Console.WriteLine("You local IPv4 address couldn't be found...");
             return null;
         }
+
+        /// <summary>
+        /// Determines the type of request from the client and handles accordingly
+        /// </summary>
+        /// <param name="data"></param>
+        private async Task HandleData(string data, Socket client)
+        {
+            if(data.StartsWith(DataPrefix.Message.GetDescription()))
+            {
+
+            }
+            if(data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
+            {
+                string response = DataPrefix.RegisterUser.GetDescription() + StatusCode.Success + "<EOF>";
+
+                Send(client, response);
+
+                return;
+            }
+
+            return;
+        }
+
 
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using ChatServer.Shared;
+﻿using ChatServer.Core;
+using ChatServer.Shared;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -141,7 +142,7 @@ namespace ChatApp.Core
                 var response = await ChatClient.RegisterUser(user);
 
                 // If attempt to register user was not succesfful
-                if(!response == true)
+                if(response == StatusCode.Failure)
                 {
                     //show error
                 }

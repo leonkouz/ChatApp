@@ -1,4 +1,5 @@
 ﻿using ChatServer;
+using ChatServer.Core;
 using ChatServer.Shared;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,11 @@ namespace ChatApp.Core
         ///  Socket used to connect to server
         /// </summary>
         private static Socket _client;
+
+        /// <summary>
+        /// The status code that is returned from the server when registering a user
+        /// </summary>
+        private static StatusCode _registerUserStatus;
 
         #endregion
 
@@ -166,13 +172,8 @@ namespace ChatApp.Core
                     // more data. 
                     if (content.IndexOf("<EOF>") > -1)
                     {
-                        //Rebuild message object
-                        //Message message = Message.BuildMessageFromTcpString(content);
-
-                        //Raise message received event
-                       // MessageReceivedEventArgs args = Message.BuildMessageReceivedEvent(message);
-                        //message.OnMessageReceived(args);
-
+                        HandleData(content);
+                        
                         //Removes previous data received
                         state.DeleteData();
                     }
@@ -245,20 +246,50 @@ namespace ChatApp.Core
         /// <summary>
         /// Event to indicate a user has been registered
         /// </summary>
-        private static event EventHandler UserRegistered;
+        private static event EventHandler<RegisterUserEventArgs> UserRegistered;
 
         /// <summary>
         /// Raises UserRegistered event
         /// </summary>
-        private void OnUserRegistered(EventArgs e)
+        private static void OnUserRegistered(RegisterUserEventArgs e)
         {
-            UserRegistered?.Invoke(this, e);
+            UserRegistered?.Invoke(null, e);
         }
 
 
         #endregion
 
         #region Helper Functions
+
+        /// <summary>
+        /// Determines the type of data from the server and handles accordingly
+        /// </summary>
+        /// <param name="data"></param>
+        private static void HandleData(string data)
+        {
+            if(data.StartsWith(DataPrefix.Message.GetDescription()))
+            {
+                //Rebuild message object
+                //Message message = Message.BuildMessageFromTcpString(content);
+
+                //Raise message received event
+                // MessageReceivedEventArgs args = Message.BuildMessageReceivedEvent(message);
+                //message.OnMessageReceived(args);
+            }
+            if (data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
+            {
+                // Trims response
+                string response = TrimTcpResponse(DataPrefix.RegisterUser, data);
+
+                RegisterUserEventArgs args = new RegisterUserEventArgs
+                {
+                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), response)
+                };
+
+                // Raise user registered event
+                OnUserRegistered(args);
+            }
+        }
 
         /// <summary>
         /// Returns IPv4 address that has a default gateway
@@ -282,6 +313,8 @@ namespace ChatApp.Core
             return null;
         }
 
+        #region Send Message
+
         /// <summary>
         /// Processes and sends a <see cref="Message"/>
         /// </summary>
@@ -296,6 +329,8 @@ namespace ChatApp.Core
             sendDone.WaitOne();
         }
 
+        #endregion
+
         #region Register User
 
         /// <summary>
@@ -303,7 +338,7 @@ namespace ChatApp.Core
         /// </summary>
         /// <param name="user">The user to register</param>
         /// <returns></returns>
-        public static async Task<bool> RegisterUser(User user)
+        public static async Task<StatusCode> RegisterUser(User user)
         {
             await Task.Run(() =>
             {
@@ -326,17 +361,37 @@ namespace ChatApp.Core
                 }
             });
 
-            return true;
+            return _registerUserStatus;
         }
 
-        private static void ChatClient_UserRegistered(object sender, EventArgs e)
+        /// <summary>
+        /// Executed when the <see cref="UserRegistered"</see> event is fired/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ChatClient_UserRegistered(object sender, RegisterUserEventArgs e)
         {
+            _registerUserStatus = e.Status;
             userRegisteredDone.Set();
         }
 
+
+
         #endregion
 
+        /// <summary>
+        /// Trims a response from the server so the actual data can be used/read.
+        /// </summary>
+        /// <param name="prefix"></param>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private static string TrimTcpResponse(DataPrefix prefix, string str)
+        {
+            string response = str.TrimStart(prefix.GetDescription().ToCharArray());
+            response = response.TrimEnd("<EOF>".ToCharArray());
 
+            return response;
+        }
 
         #endregion
     }
