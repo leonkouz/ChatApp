@@ -1,5 +1,4 @@
 ﻿using ChatServer;
-using ChatServer.Core;
 using ChatServer.Shared;
 using System;
 using System.Collections.Generic;
@@ -22,11 +21,19 @@ namespace ChatApp.Core
         #region Private Fields
 
         // ManualResetEvent instances signal completion.  
-        private static ManualResetEvent connectDone = new ManualResetEvent(false);
-        private static ManualResetEvent sendDone = new ManualResetEvent(false);
-        private static ManualResetEvent receiveDone = new ManualResetEvent(false);
+        private static ManualResetEvent _connectDone = new ManualResetEvent(false);
+        private static ManualResetEvent _sendDone = new ManualResetEvent(false);
+        private static ManualResetEvent _receiveDone = new ManualResetEvent(false);
 
-        private static ManualResetEvent userRegisteredDone = new ManualResetEvent(false);
+        /// <summary>
+        /// Signals completion of user registration workflow
+        /// </summary>
+        private static ManualResetEvent _userRegisteredDone = new ManualResetEvent(false);
+        
+        /// <summary>
+        /// Signals completion of user login workflow
+        /// </summary>
+        private static ManualResetEvent _userLoginDone = new ManualResetEvent(false);
 
         //private static IPHostEntry _ipHostInfo;
 
@@ -51,9 +58,14 @@ namespace ChatApp.Core
         private static Socket _client;
 
         /// <summary>
-        /// The status code that is returned from the server when registering a user
+        /// The response that is returned from the server when registering a user
         /// </summary>
         private static Response _registerUserResponse;
+
+        /// <summary>
+        /// The response that is returned from the server when logging in a user
+        /// </summary>
+        private static Response _loginResponse;
 
         #endregion
 
@@ -87,7 +99,7 @@ namespace ChatApp.Core
                 // Connect to the remote endpoint.  
                 _client.BeginConnect(_remoteEP, new AsyncCallback(ConnectCallback), _client);
 
-                connectDone.WaitOne();
+                _connectDone.WaitOne();
             }
             catch (Exception eee)
             {
@@ -112,7 +124,7 @@ namespace ChatApp.Core
                 Console.WriteLine("Socket connected to {0}", client.RemoteEndPoint.ToString());
 
                 // Signal that the connection has been made.  
-                connectDone.Set();
+                _connectDone.Set();
 
                 Receive(client);
             }
@@ -122,7 +134,7 @@ namespace ChatApp.Core
                 _client.Close();
 
                 // Indicate that the connection attempt has finished and allows application to continue as normal
-                connectDone.Set();
+                _connectDone.Set();
 
                 MessageBox.Show(e.ToString());
             }
@@ -221,7 +233,7 @@ namespace ChatApp.Core
                 Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
                 // Signal that all bytes have been sent.  
-                sendDone.Set();
+                _sendDone.Set();
 
                 //Begin receiving data again
                 Receive(client);
@@ -233,7 +245,7 @@ namespace ChatApp.Core
                 _client.Close();
 
                 // Indicates that the send attempt has finished and allows application to continue as normal
-                sendDone.Set();
+                _sendDone.Set();
 
                 throw new Exception(e.GetType().ToString() + e.Message);
             }
@@ -246,14 +258,33 @@ namespace ChatApp.Core
         /// <summary>
         /// Event to indicate a user has been registered
         /// </summary>
-        private static event EventHandler<RegisterUserEventArgs> UserRegistered;
+        private static event EventHandler<ServerResponseEventArgs> ServerResponse;
 
         /// <summary>
         /// Raises UserRegistered event
         /// </summary>
-        private static void OnUserRegistered(RegisterUserEventArgs e)
+        private static void OnUserRegistered(ServerResponseEventArgs e)
         {
-            UserRegistered?.Invoke(null, e);
+            ServerResponse?.Invoke(null, e);
+        }
+
+        /// <summary>
+        /// Executed when the <see cref="UserRegistered"</see> event is fired/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ChatClient_ServerResponse(object sender, ServerResponseEventArgs e)
+        {
+            if (e.Type == DataPrefix.RegisterUser)
+            {
+                _registerUserResponse = new Response
+                {
+                    Status = e.Status,
+                    Error = e.Error
+                };
+            }
+
+            _userRegisteredDone.Set();
         }
 
         #endregion
@@ -281,8 +312,9 @@ namespace ChatApp.Core
                 // Trims and splits response
                 string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
 
-                RegisterUserEventArgs args = new RegisterUserEventArgs
+                ServerResponseEventArgs args = new ServerResponseEventArgs
                 {
+                    Type = DataPrefix.RegisterUser,
                     Status = (StatusCode)Enum.Parse(typeof(StatusCode), response[0]),
                     Error = response[1]
                 };
@@ -334,7 +366,7 @@ namespace ChatApp.Core
 
             // Send data to the server
             Send(_client, messageString);
-            sendDone.WaitOne();
+            _sendDone.WaitOne();
         }
 
         #endregion
@@ -351,22 +383,18 @@ namespace ChatApp.Core
             await Task.Run(() =>
             {
                 // Set the ManualResetEvent to wait again in case the registration fails.
-                userRegisteredDone.Reset();
+                _userRegisteredDone.Reset();
 
-                UserRegistered += ChatClient_UserRegistered;
+                ServerResponse += ChatClient_ServerResponse;
 
                 string tcpString = user.BuildRegisterUserTcpString();
 
-                // Add the data prefix so the server is aware of the type of request
-                tcpString = DataPrefix.RegisterUser.GetDescription() + tcpString;
-
                 // Send data to server and wait
                 Send(_client, tcpString);
-
-                sendDone.WaitOne();
+                _sendDone.WaitOne();
 
                 // Wait until server response to register user
-                while (!userRegisteredDone.WaitOne(0))
+                while (!_userRegisteredDone.WaitOne(0))
                 {
                     Thread.SpinWait(1000);
                 }
@@ -375,32 +403,44 @@ namespace ChatApp.Core
             return _registerUserResponse;
         }
 
-        /// <summary>
-        /// Executed when the <see cref="UserRegistered"</see> event is fired/>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void ChatClient_UserRegistered(object sender, RegisterUserEventArgs e)
-        {
-            _registerUserResponse = new Response
-            {
-                Status = e.Status,
-                Error = e.Error
-            };
-
-            userRegisteredDone.Set();
-        }
-
         #endregion
 
         #region Login
 
+        /// <summary>
+        /// Sends a request to the server to login the user
+        /// </summary>
+        /// <param name="loginToken">The token to login the user</param>
+        /// <returns></returns>
         public static async Task<Response> Login(LoginToken loginToken)
         {
+            await Task.Run(() =>
+            {
+                // Set the ManualResetEvent to wait again in case the registration fails.
+                _userLoginDone.Reset();
+
+                ServerResponse += ChatClient_ServerResponse;
+
+                string tcpString = loginToken.BuildLoginTcpString();
+
+                // Send data to server and wait
+                Send(_client, tcpString);
+                _sendDone.WaitOne();
+
+                // Wait until server response to register user
+                while (!_userLoginDone.WaitOne(0))
+                {
+                    Thread.SpinWait(1000);
+                }
+            });
+
+            return _loginResponse;
 
         }
 
         #endregion
+
+        
 
         #endregion
     }

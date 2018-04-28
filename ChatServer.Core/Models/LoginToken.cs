@@ -27,7 +27,7 @@ namespace ChatServer.Shared
         /// Concatenates user information to send to the server in order to register user
         /// </summary>
         /// <returns></returns>
-        public string BuildRegisterUserTcpString()
+        public string BuildLoginTcpString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(Email); // test@test.com
@@ -35,10 +35,13 @@ namespace ChatServer.Shared
             sb.Append(Password.Unsecure()); //*****
             sb.Append(Constants.Delimiter);
 
-            // String of data looks like this:
-            // test@test.com\0*****
+            // Add the data prefix so the server is aware of the type of request
+            string str = DataPrefix.LoginUser.GetDescription() + sb.ToString();
 
-            return sb.ToString();
+            // String of data looks like this:
+            // -logintest@test.com\0*****
+
+            return str;
         }
 
     }

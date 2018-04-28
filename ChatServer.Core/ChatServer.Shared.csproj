@@ -41,10 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Enums\DataPrefixes.cs" />
+    <Compile Include="Enums\DataPrefix.cs" />
     <Compile Include="Enums\EnumExtensions.cs" />
     <Compile Include="Enums\StatusCode.cs" />
-    <Compile Include="EventArgs\RegisterUserEventArgs.cs" />
+    <Compile Include="EventArgs\ServerResponseEventArgs.cs" />
     <Compile Include="Models\LoginToken.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\RegisterUserToken.cs" />

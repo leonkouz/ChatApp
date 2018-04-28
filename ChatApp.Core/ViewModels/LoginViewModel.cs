@@ -134,7 +134,7 @@ namespace ChatApp.Core
                     Password = password
                 };
 
-                var response = 
+                var response = ChatClient.Login(token);
 
 
                 // Go to chat page

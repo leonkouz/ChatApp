@@ -87,10 +87,13 @@ namespace ChatServer.Shared
             sb.Append(Constants.Delimiter);
             sb.Append(Password.Unsecure()); //*****
 
-            // String of data looks like this:
-            // test@test.com\0Bob\0Johns\0*****
+            // Add the data prefix so the server is aware of the type of request
+            string str = DataPrefix.RegisterUser.GetDescription() + sb.ToString();
 
-            return sb.ToString();
+            // String of data looks like this:
+            // -regusertest@test.com\0Bob\0Johns\0*****
+
+            return str;
         }
 
         #endregion

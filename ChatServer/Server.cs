@@ -11,7 +11,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Data.SQLite;
 using ChatServer.Shared;
-using ChatServer.Core;
 
 namespace ChatServer
 {
@@ -66,7 +65,6 @@ namespace ChatServer
                 _database.Connect();
 
                 Console.WriteLine("Connected to database");
-
 
                 _listener.Bind(_endPoint);
                 _listener.Listen(100);
