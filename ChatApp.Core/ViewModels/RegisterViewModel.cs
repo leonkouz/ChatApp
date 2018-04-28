@@ -1,5 +1,7 @@
 ﻿using ChatServer.Core;
 using ChatServer.Shared;
+using System;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -163,15 +165,31 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
+                // Get the password from the RegisterPage code behind
+                var password = (parameter as IHavePassword).SecurePassword;
+
+                // Check if all fields have been filled in
+                if(!CheckIfAllFieldsAreFilled(password))
+                {
+                    // Return if all fields have not been filled in
+                    return;
+                }
+
+                // Validate email
+                if(!IsValidEmail())
+                {
+                    return;
+                }
+
                 ChatClient.Connect();
-                
+
                 // Create user
                 User user = new User
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
                     Email = this.Email,
-                    Password = (parameter as IHavePassword).SecurePassword,
+                    Password = password
                 };
 
                 // Attempt to register user
@@ -197,8 +215,41 @@ namespace ChatApp.Core
                 {
                     IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
                 }
-
             });
+        }
+
+        /// <summary>
+        /// Checks if all fields have data entered by the user
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckIfAllFieldsAreFilled(SecureString password)
+        {
+            if (FirstName == null || LastName == null || Email == null || password == null) 
+            {
+                Error = "Fill all fields";
+                ShowError = true;
+
+                return false;
+            }
+            
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the email is valid
+        /// </summary>
+        /// <returns></returns>
+        private bool IsValidEmail()
+        {
+            if (!Validator.IsValidEmail(Email))
+            {
+                Error = "Invalid Email";
+                ShowError = true;
+
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>

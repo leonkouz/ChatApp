@@ -52,6 +52,7 @@
     <Compile Include="Security\SecureStringHelpers.cs" />
     <Compile Include="StateObject.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="Validator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

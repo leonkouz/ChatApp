@@ -346,7 +346,6 @@ namespace ChatApp.Core
                 // Set the ManualResetEvent to wait again in case the registration fails.
                 userRegisteredDone.Reset();
 
-                // Listen for user registered event
                 UserRegistered += ChatClient_UserRegistered;
 
                 string tcpString = user.BuildRegisterUserTcpString();

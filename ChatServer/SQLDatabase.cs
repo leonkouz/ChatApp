@@ -37,12 +37,23 @@ namespace ChatServer
         
         #endregion
 
+        /// <summary>
+        /// Connect to the SQLite Database
+        /// </summary>
         public void Connect()
         {
             _dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
             _dbConnection.Open();
         }
 
+        /// <summary>
+        /// Attempts to add a user to the Users table in the SQLite database
+        /// </summary>
+        /// <param name="email">User's email</param>
+        /// <param name="firstName">User's first name</param>
+        /// <param name="lastName">User's last name</param>
+        /// <param name="password">User's password</param>
+        /// <returns></returns>
         public async Task<Response> AddUser(string email, string firstName, string lastName, string password)
         {
             try
