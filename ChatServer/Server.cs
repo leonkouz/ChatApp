@@ -63,6 +63,11 @@ namespace ChatServer
         {
             try
             {
+                _database.Connect();
+
+                Console.WriteLine("Connected to database");
+
+
                 _listener.Bind(_endPoint);
                 _listener.Listen(100);
 
@@ -250,32 +255,56 @@ namespace ChatServer
         /// <param name="data"></param>
         private async Task HandleData(string data, Socket client)
         {
+            // If the data is prefixed with -msg
             if(data.StartsWith(DataPrefix.Message.GetDescription()))
             {
 
             }
+
+            // If the data is prefixed with -reguser
             if(data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
             {
+                var response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
+
+                Response dbResponse = new Response();
+
+                try
+                {
+                    // Attempt to add user to database
+                    dbResponse = await _database.AddUser(response[0], response[1], response[2], response[3]);
+                }
+                catch(Exception exc)
+                {
+
+                }
+                
                 StringBuilder sb = new StringBuilder();
 
-                sb.Append(DataPrefix.RegisterUser.GetDescription());
-                sb.Append(Constants.Delimiter);
-                sb.Append(StatusCode.Failure);
-                sb.Append(Constants.Delimiter);
-                sb.Append("Unable to do something");
-                sb.Append(Constants.EndOfFile);
+                if (dbResponse.Status == StatusCode.Success)
+                {
+                    sb.Append(DataPrefix.RegisterUser.GetDescription());
+                    sb.Append(Constants.Delimiter);
+                    sb.Append(StatusCode.Success);
+                    sb.Append(Constants.Delimiter);
+                    sb.Append(Constants.EndOfFile);
+                }
+                else 
+                {
+                    sb.Append(DataPrefix.RegisterUser.GetDescription());
+                    sb.Append(Constants.Delimiter);
+                    sb.Append(StatusCode.Failure); 
+                    sb.Append(Constants.Delimiter);
+                    sb.Append(dbResponse.Error);
+                    sb.Append(Constants.EndOfFile);
+                }
 
                 Send(client, sb.ToString());
 
                 return;
             }
-
             return;
         }
-
-
+        
         #endregion
-
-
     }
 }

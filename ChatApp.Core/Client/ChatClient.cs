@@ -279,7 +279,7 @@ namespace ChatApp.Core
             if (data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
             {
                 // Trims and splits response
-                string[] response = TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
+                string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
 
                 RegisterUserEventArgs args = new RegisterUserEventArgs
                 {
@@ -343,6 +343,9 @@ namespace ChatApp.Core
         {
             await Task.Run(() =>
             {
+                // Set the ManualResetEvent to wait again in case the registration fails.
+                userRegisteredDone.Reset();
+
                 // Listen for user registered event
                 UserRegistered += ChatClient_UserRegistered;
 
@@ -381,25 +384,8 @@ namespace ChatApp.Core
 
             userRegisteredDone.Set();
         }
-
+        
         #endregion
-
-        /// <summary>
-        /// Trims a response from the server and splits into an array so the actual data can be used/read.
-        /// </summary>
-        /// <param name="prefix"></param>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private static string[] TrimAndSplitTcpResponse(DataPrefix prefix, string str)
-        {
-            string response = str.TrimStart(prefix.GetDescription().ToCharArray()).TrimStart(Constants.Delimiter.ToCharArray());
-
-            response = response.TrimEnd("<EOF>".ToCharArray());
-
-            string[] responseArray = response.Split(Convert.ToChar(Constants.Delimiter));
-
-            return responseArray;
-        }
 
         #endregion
     }

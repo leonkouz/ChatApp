@@ -164,7 +164,7 @@ namespace ChatApp.Core
             await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
                 ChatClient.Connect();
-
+                
                 // Create user
                 User user = new User
                 {
@@ -181,9 +181,16 @@ namespace ChatApp.Core
                 if(response.Status == StatusCode.Failure)
                 {
                     //Show error
-                    Error = response.Error;
-                    ShowError = true;
+                    if(response.Error == null)
+                    {
+                        Error = "Something went wrong";
+                    }
+                    else
+                    {
+                        Error = response.Error;
+                    }
                     
+                    ShowError = true;
                 }
                 // otherwise log the user in
                 else

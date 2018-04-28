@@ -15,11 +15,6 @@ namespace ChatServer.Shared
         private string ID { get; set; }
 
         /// <summary>
-        /// The display name of the user
-        /// </summary>
-        public string UserName { get; set; }
-
-        /// <summary>
         /// The email of the user
         /// </summary>
         public string Email { get; set; }
@@ -84,15 +79,19 @@ namespace ChatServer.Shared
         public string BuildRegisterUserTcpString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(Email);
+            sb.Append(Email); // test@test.com
             sb.Append(Constants.Delimiter);
-            sb.Append(FirstName);
+            sb.Append(FirstName); // Bob
             sb.Append(Constants.Delimiter);
-            sb.Append(LastName);
+            sb.Append(LastName); // Johns
             sb.Append(Constants.Delimiter);
-            sb.Append(Password.Unsecure());
+            sb.Append(Password.Unsecure()); //*****
+
+            // String of data looks like this:
+            // test@test.com\0Bob\0Johns\0*****
 
             return sb.ToString();
+
 
         }
 

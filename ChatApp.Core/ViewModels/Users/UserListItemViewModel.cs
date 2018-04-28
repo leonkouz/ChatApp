@@ -20,11 +20,6 @@ namespace ChatApp.Core
         private string ID { get; set; }
 
         /// <summary>
-        /// The display name of the user
-        /// </summary>
-        public string UserName { get; set; }
-
-        /// <summary>
         /// The email of the user
         /// </summary>
         public string Email { get; set; }
