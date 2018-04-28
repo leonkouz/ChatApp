@@ -302,6 +302,15 @@ namespace ChatServer
 
                 return;
             }
+
+            //If the data is prefixed with -login
+            if(data.StartsWith(DataPrefix.LoginUser.GetDescription()))
+            {
+
+            }
+            
+
+
             return;
         }
         

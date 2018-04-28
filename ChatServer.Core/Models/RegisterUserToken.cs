@@ -7,7 +7,7 @@ namespace ChatServer.Shared
     /// <summary>
     /// The User model for the TCP client
     /// </summary>
-    public class User
+    public class RegisterUserToken
     {
         /// <summary>
         /// The user id
@@ -91,8 +91,6 @@ namespace ChatServer.Shared
             // test@test.com\0Bob\0Johns\0*****
 
             return sb.ToString();
-
-
         }
 
         #endregion

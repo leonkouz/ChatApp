@@ -165,26 +165,23 @@ namespace ChatApp.Core
         {
             await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
+                await Task.Delay(1000);
+
                 // Get the password from the RegisterPage code behind
                 var password = (parameter as IHavePassword).SecurePassword;
 
-                // Check if all fields have been filled in
                 if(!CheckIfAllFieldsAreFilled(password))
-                {
-                    // Return if all fields have not been filled in
-                    return;
-                }
+                    return;    
 
                 // Validate email
-                if(!IsValidEmail())
-                {
+                if (!IsValidEmail())
                     return;
-                }
 
-                ChatClient.Connect();
+                if(!ChatClient.Connected)
+                    ChatClient.Connect();
 
                 // Create user
-                User user = new User
+                RegisterUserToken user = new RegisterUserToken
                 {
                     FirstName = this.FirstName,
                     LastName = this.LastName,
@@ -224,9 +221,9 @@ namespace ChatApp.Core
         /// <returns></returns>
         private bool CheckIfAllFieldsAreFilled(SecureString password)
         {
-            if (FirstName == null || LastName == null || Email == null || password == null) 
+            if (String.IsNullOrWhiteSpace(FirstName) || String.IsNullOrWhiteSpace(LastName) || String.IsNullOrWhiteSpace(Email) || password.Length == 0) 
             {
-                Error = "Fill all fields";
+                Error = "Please fill all fields";
                 ShowError = true;
 
                 return false;

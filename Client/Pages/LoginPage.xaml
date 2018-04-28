@@ -43,7 +43,16 @@
                                      />
 
                             <!-- Password -->
-                            <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
+                            <PasswordBox x:Name="PasswordText" 
+                                         Tag="Password" 
+                                         Margin="0 0 0 10"/>
+
+                            <!-- Error message -->
+                            <TextBlock Text="{Binding Error}"
+                                       Foreground="Red"
+                                       FontFamily="{StaticResource LatoRegular}"
+                                       Visibility="{Binding ShowError, Converter={local:BooleanToVisiblityConverter}}"
+                                       />
 
                             <!-- Login button -->
                             <Button Content="Login" 

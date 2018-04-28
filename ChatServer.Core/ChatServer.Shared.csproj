@@ -45,12 +45,13 @@
     <Compile Include="Enums\EnumExtensions.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="EventArgs\RegisterUserEventArgs.cs" />
+    <Compile Include="Models\LoginToken.cs" />
     <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\RegisterUserToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Response.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Security\SecureStringHelpers.cs" />
-    <Compile Include="StateObject.cs" />
+    <Compile Include="Models\StateObject.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Validator.cs" />
   </ItemGroup>

@@ -18,5 +18,8 @@ namespace ChatServer.Shared
         [Description("-reguser")]
         RegisterUser = 1,
 
+        [Description("-login")]
+        LoginUser = 2
+
     }
 }

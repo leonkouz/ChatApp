@@ -290,6 +290,13 @@ namespace ChatApp.Core
                 // Raise user registered event
                 OnUserRegistered(args);
             }
+
+            if(data.StartsWith(DataPrefix.LoginUser.GetDescription()))
+            {
+                string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.LoginUser, data);
+
+
+            }
         }
 
         /// <summary>
@@ -339,7 +346,7 @@ namespace ChatApp.Core
         /// </summary>
         /// <param name="user">The user to register</param>
         /// <returns></returns>
-        public static async Task<Response> RegisterUser(User user)
+        public static async Task<Response> RegisterUser(RegisterUserToken user)
         {
             await Task.Run(() =>
             {
@@ -383,7 +390,16 @@ namespace ChatApp.Core
 
             userRegisteredDone.Set();
         }
-        
+
+        #endregion
+
+        #region Login
+
+        public static async Task<Response> Login(LoginToken loginToken)
+        {
+
+        }
+
         #endregion
 
         #endregion
