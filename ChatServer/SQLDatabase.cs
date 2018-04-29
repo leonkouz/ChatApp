@@ -96,5 +96,82 @@ namespace ChatServer
                 return response;
             }
         }
+
+        /// <summary>
+        /// Validates the credentials sent by the client and returns a response
+        /// </summary>
+        /// <param name="email">The email of the user</param>
+        /// <param name="password">The password of the user</param>
+        /// <returns></returns>
+        public async Task<Response> LogIn(string email, string password)
+        {
+            Response response = null;
+
+            try
+            {
+                string sql = "SELECT * FROM Users WHERE Email = @Email";
+
+                SQLiteCommand command = new SQLiteCommand(sql, _dbConnection);
+
+                command.Parameters.AddWithValue("@Email", email);
+
+                var reader = command.ExecuteReader();
+
+                int ordEmail = reader.GetOrdinal("Email");
+                int ordPassword = reader.GetOrdinal("Password");
+
+                string dbEmail = null;
+                string dbPassword = null;
+
+                while (reader.Read())
+                {
+                    dbEmail = reader.GetString(ordEmail);
+                    dbPassword = reader.GetString(ordPassword);
+                }
+
+                // If credentials are correct
+                if (dbEmail == email && dbPassword == password)
+                {
+                    response = new Response()
+                    {
+                        Status = StatusCode.Success
+                    };
+
+                    Console.WriteLine(email + " has logged in");
+
+                }
+                // If either password or email is not correct
+                else if (dbEmail != email || dbPassword != password)
+                {
+                    response = new Response()
+                    {
+                        Status = StatusCode.Failure,
+                        Error = "Invalid username or password, please try again"
+                    };
+                }
+                // If none of the above
+                else
+                {
+                    response = new Response()
+                    {
+                        Status = StatusCode.Failure,
+                        Error = "Unkown error"
+                    };
+                }
+
+                return response;
+            }
+            catch (Exception exc)
+            {
+                response = new Response
+                {
+                    Status = StatusCode.Failure,
+                    Error = exc.ToString()
+                };
+            }
+
+            return response;
+
+        }
     }
 }

@@ -263,7 +263,7 @@ namespace ChatApp.Core
         /// <summary>
         /// Raises UserRegistered event
         /// </summary>
-        private static void OnUserRegistered(ServerResponseEventArgs e)
+        private static void OnServerResponse(ServerResponseEventArgs e)
         {
             ServerResponse?.Invoke(null, e);
         }
@@ -282,9 +282,21 @@ namespace ChatApp.Core
                     Status = e.Status,
                     Error = e.Error
                 };
+
+                _userRegisteredDone.Set();
+
             }
 
-            _userRegisteredDone.Set();
+            if(e.Type == DataPrefix.LoginUser)
+            {
+                _loginResponse = new Response
+                {
+                    Status = e.Status,
+                    Error = e.Error,
+                };
+
+                _userLoginDone.Set();
+            }
         }
 
         #endregion
@@ -312,6 +324,9 @@ namespace ChatApp.Core
                 // Trims and splits response
                 string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
 
+                string status = response[0];
+                string error = response[1];
+
                 ServerResponseEventArgs args = new ServerResponseEventArgs
                 {
                     Type = DataPrefix.RegisterUser,
@@ -320,14 +335,25 @@ namespace ChatApp.Core
                 };
 
                 // Raise user registered event
-                OnUserRegistered(args);
+                OnServerResponse(args);
             }
 
             if(data.StartsWith(DataPrefix.LoginUser.GetDescription()))
             {
                 string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.LoginUser, data);
 
+                string status = response[0];
+                string error = response[1];
 
+                ServerResponseEventArgs args = new ServerResponseEventArgs
+                {
+                    Type = DataPrefix.LoginUser,
+                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), status),
+                    Error = error
+                };
+
+                // Raise user logged in event 
+                OnServerResponse(args);
             }
         }
 
@@ -435,7 +461,6 @@ namespace ChatApp.Core
             });
 
             return _loginResponse;
-
         }
 
         #endregion

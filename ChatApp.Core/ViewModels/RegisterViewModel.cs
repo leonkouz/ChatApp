@@ -189,7 +189,7 @@ namespace ChatApp.Core
                 };
 
                 // Attempt to register user
-                var response = await ChatClient.RegisterUser(user);
+                Response response = await ChatClient.RegisterUser(user);
 
                 // If attempt to register user was not succesfful
                 if(response.Status == StatusCode.Failure)

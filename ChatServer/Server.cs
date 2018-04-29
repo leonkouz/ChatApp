@@ -101,7 +101,7 @@ namespace ChatServer
             // Signal the main thread to continue.  
             allDone.Set();
 
-            Console.WriteLine(handler.LocalEndPoint + " Connected");
+            Console.WriteLine(handler.RemoteEndPoint + " Connected");
 
             // Create the state object.  
             StateObject state = new StateObject
@@ -264,39 +264,26 @@ namespace ChatServer
             {
                 var response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
 
+                string email = response[0];
+                string firstName = response[1];
+                string lastName = response[2];
+                string password = response[3];
+
                 Response dbResponse = new Response();
 
                 try
                 {
                     // Attempt to add user to database
-                    dbResponse = await _database.AddUser(response[0], response[1], response[2], response[3]);
+                    dbResponse = await _database.AddUser(email, firstName, lastName, password);
                 }
                 catch(Exception exc)
                 {
-
-                }
-                
-                StringBuilder sb = new StringBuilder();
-
-                if (dbResponse.Status == StatusCode.Success)
-                {
-                    sb.Append(DataPrefix.RegisterUser.GetDescription());
-                    sb.Append(Constants.Delimiter);
-                    sb.Append(StatusCode.Success);
-                    sb.Append(Constants.Delimiter);
-                    sb.Append(Constants.EndOfFile);
-                }
-                else 
-                {
-                    sb.Append(DataPrefix.RegisterUser.GetDescription());
-                    sb.Append(Constants.Delimiter);
-                    sb.Append(StatusCode.Failure); 
-                    sb.Append(Constants.Delimiter);
-                    sb.Append(dbResponse.Error);
-                    sb.Append(Constants.EndOfFile);
+                    Console.WriteLine(exc.ToString());
                 }
 
-                Send(client, sb.ToString());
+                string responseToClient = BuildTcpResponse(DataPrefix.RegisterUser, dbResponse);
+
+                Send(client, responseToClient);
 
                 return;
             }
@@ -304,14 +291,64 @@ namespace ChatServer
             //If the data is prefixed with -login
             if(data.StartsWith(DataPrefix.LoginUser.GetDescription()))
             {
+                var response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.LoginUser, data);
 
+                string email = response[0];
+                string password = response[1];
+
+                Response dbResponse = new Response();
+
+                try
+                {
+                    dbResponse = await _database.LogIn(email, password);
+                }
+                catch(Exception exc)
+                {
+                    Console.WriteLine(exc.ToString());
+                }
+
+                string responseToClient = BuildTcpResponse(DataPrefix.LoginUser, dbResponse);
+
+                Send(client, responseToClient);
+
+                return;
             }
-            
-
 
             return;
         }
         
+        /// <summary>
+        /// Builds a response to the client based on the results from the database
+        /// </summary>
+        /// <param name="prefix">The type of request that has been made</param>
+        /// <param name="dbResponse">The response from the database</param>
+        /// <returns></returns>
+        private string BuildTcpResponse(DataPrefix prefix, Response dbResponse)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (dbResponse.Status == StatusCode.Success)
+            {
+                sb.Append(prefix.GetDescription());
+                sb.Append(Constants.Delimiter);
+                sb.Append(StatusCode.Success);
+                sb.Append(Constants.Delimiter);
+                sb.Append(Constants.EndOfFile);
+            }
+            else
+            {
+                sb.Append(prefix.GetDescription());
+                sb.Append(Constants.Delimiter);
+                sb.Append(StatusCode.Failure);
+                sb.Append(Constants.Delimiter);
+                sb.Append(dbResponse.Error);
+                sb.Append(Constants.EndOfFile);
+            }
+
+            return sb.ToString();
+        }
+
+
         #endregion
     }
 }

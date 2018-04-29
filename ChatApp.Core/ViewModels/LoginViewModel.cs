@@ -134,15 +134,23 @@ namespace ChatApp.Core
                     Password = password
                 };
 
-                var response = ChatClient.Login(token);
+                Response response = await ChatClient.Login(token);
 
+                // If attempt to login user was not succesfful
+                if (response.Status == StatusCode.Failure)
+                {
+                    //Show error
+                    if (response.Error == null)
+                        Error = "Something went wrong";
+                    else
+                        Error = response.Error;
 
-                // Go to chat page
-                IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
+                    ShowError = true;
+                }
+                // otherwise log the user in
+                else
+                    IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GlobalChat);
 
-                /*
-                var email = Email;
-                var pass = (parameter as IHavePassword).SecurePassword.Unsecure(); // MUST CHANGE! NEVER STORE UNSECURE PASSWORD IN VARIABLE, PASS DIRECTLY TO METHOD*/
             });
         }
 
