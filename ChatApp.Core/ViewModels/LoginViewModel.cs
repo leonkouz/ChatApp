@@ -133,7 +133,7 @@ namespace ChatApp.Core
                     Email = this.Email,
                     Password = password
                 };
-
+                                                               
                 Response response = await ChatClient.Login(token);
 
                 // If attempt to login user was not succesfful
@@ -154,11 +154,16 @@ namespace ChatApp.Core
             });
         }
 
+        /// <summary>
+        /// Checks if a email and password have been entered
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private bool CheckIfAllFieldsAreFilled(SecureString password)
         {
             if(String.IsNullOrWhiteSpace(Email) || password.Length == 0)
             {
-                Error = "Please enter user credentails";
+                Error = "Please enter your login details.";
                 ShowError = true;
 
                 return false;
