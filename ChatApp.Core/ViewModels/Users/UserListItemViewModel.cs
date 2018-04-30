@@ -76,7 +76,7 @@ namespace ChatApp.Core
         /// <returns></returns>
         public string GetInitials(string firstName, string lastName)
         {
-            return (firstName.First() + lastName.First()).ToString();
+            return (firstName.First().ToString() + lastName.First()).ToString();
         }
 
         #endregion
