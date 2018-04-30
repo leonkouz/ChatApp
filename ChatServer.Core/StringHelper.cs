@@ -18,7 +18,7 @@ namespace ChatServer.Shared
         public static string[] TrimAndSplitTcpResponse(DataPrefix prefix, string str)
         {
             // Trim the prefix and delimiter from the start of the response
-            string response = str.TrimStart(prefix.GetDescription().ToCharArray()).TrimStart(Constants.Delimiter.ToCharArray());
+            string response = str.Remove(0, prefix.GetDescription().Length).TrimStart(Constants.Delimiter.ToCharArray());
 
             // Trim the end of file tag
             response = response.TrimEnd("<EOF>".ToCharArray());

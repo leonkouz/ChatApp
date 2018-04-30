@@ -33,7 +33,6 @@ namespace ChatServer.Shared
             sb.Append(Email); // test@test.com
             sb.Append(Constants.Delimiter);
             sb.Append(Password.Unsecure()); //*****
-            sb.Append(Constants.Delimiter);
 
             // Add the data prefix so the server is aware of the type of request
             string str = DataPrefix.LoginUser.GetDescription() + sb.ToString();
