@@ -469,8 +469,25 @@ namespace ChatApp.Core
                 string tcpString = loginToken.BuildLoginTcpString();
 
                 // Send data to server and wait
-                Send(_client, tcpString);
-                _sendDone.WaitOne();
+                try
+                {
+                    Send(_client, tcpString);
+                    _sendDone.WaitOne();
+                }
+                //catch (ObjectDisposedException exc)
+                {
+                    Response response = new Response
+                    {
+                        Status = StatusCode.Failure,
+                        Error = "Unable to connect to server"
+                    };
+
+                    _sendDone.Set();
+
+                    _loginResponse = response;
+
+                    return;
+                }
 
                 // Wait until server response to register user
                 while (!_userLoginDone.WaitOne(0))
