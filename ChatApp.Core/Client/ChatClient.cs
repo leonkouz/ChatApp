@@ -474,7 +474,7 @@ namespace ChatApp.Core
                     Send(_client, tcpString);
                     _sendDone.WaitOne();
                 }
-                //catch (ObjectDisposedException exc)
+                catch (ObjectDisposedException exc)
                 {
                     Response response = new Response
                     {
