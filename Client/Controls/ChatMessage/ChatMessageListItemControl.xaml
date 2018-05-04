@@ -20,7 +20,7 @@
                     CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Width="35"
-                    Background="Green"
+                    Background="{Binding Colour}"
                     BorderBrush="{StaticResource ForegroundLightBrush}"
                     BorderThickness="1" 
                     >

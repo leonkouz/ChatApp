@@ -12,14 +12,17 @@ namespace ChatServer.Shared
     /// </summary>
     public enum DataPrefix
     {
+        [Description("none")]
+        None = 0,
+
         [Description("-msg")]
-        Message = 0,
+        Message = 1,
 
         [Description("-reguser")]
-        RegisterUser = 1,
+        RegisterUser = 2,
 
         [Description("-login")]
-        LoginUser = 2
+        LoginUser = 3
 
     }
 }

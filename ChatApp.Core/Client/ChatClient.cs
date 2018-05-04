@@ -86,7 +86,7 @@ namespace ChatApp.Core
         {
             try
             {
-                string ipv4Address = GetLocalIpAddress(); // Replace with external IP for remote connections
+                string ipv4Address = "10.0.0.158";//GetLocalIpAddress(); // Replace with external IP for remote connections
 
                 //_ipHostInfo = Dns.GetHostEntry(ipv4Address);
 
@@ -309,7 +309,12 @@ namespace ChatApp.Core
         /// <param name="data"></param>
         private static void HandleData(string data)
         {
-            if(data.StartsWith(DataPrefix.Message.GetDescription()))
+            DataPrefix type = DataPrefix.None;
+            StatusCode status = StatusCode.None;
+            string error = string.Empty;
+
+            // If the data is prefixed with -msg
+            if (data.StartsWith(DataPrefix.Message.GetDescription()))
             {
                 //Rebuild message object
                 //Message message = Message.BuildMessageFromTcpString(content);
@@ -319,40 +324,37 @@ namespace ChatApp.Core
                 //message.OnMessageReceived(args);
             }
 
-            if (data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
+            // If the data is prefixed with -reguser
+            else if (data.StartsWith(DataPrefix.RegisterUser.GetDescription()))
             {
                 // Trims and splits response
                 string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.RegisterUser, data);
 
-                string status = response[0];
-                string error = response[1];
-
-                ServerResponseEventArgs args = new ServerResponseEventArgs
-                {
-                    Type = DataPrefix.RegisterUser,
-                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), response[0]),
-                    Error = response[1]
-                };
-
-                // Raise user registered event
-                OnServerResponse(args);
+                type = DataPrefix.RegisterUser;
+                status = (StatusCode)Enum.Parse(typeof(StatusCode), response[0]);
+                error = response[1];
             }
 
-            if(data.StartsWith(DataPrefix.LoginUser.GetDescription()))
+            // If the data is prefixed with -login
+            else if(data.StartsWith(DataPrefix.LoginUser.GetDescription()))
             {
                 string[] response = StringHelper.TrimAndSplitTcpResponse(DataPrefix.LoginUser, data);
 
-                string status = response[0];
-                string error = response[1];
+                type = DataPrefix.LoginUser;
+                status = (StatusCode)Enum.Parse(typeof(StatusCode), response[0]);
+                error = response[1];
+            }
 
+            if(type != DataPrefix.None)
+            {
                 ServerResponseEventArgs args = new ServerResponseEventArgs
                 {
-                    Type = DataPrefix.LoginUser,
-                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), status),
+                    Type = type,
+                    Status = status,
                     Error = error
                 };
 
-                // Raise user logged in event 
+                // Raise server response event 
                 OnServerResponse(args);
             }
         }
@@ -416,9 +418,26 @@ namespace ChatApp.Core
                 string tcpString = user.BuildRegisterUserTcpString();
 
                 // Send data to server and wait
-                Send(_client, tcpString);
-                _sendDone.WaitOne();
+                try
+                {
+                    Send(_client, tcpString);
+                    _sendDone.WaitOne();
+                }
+                catch (ObjectDisposedException exc)
+                {
+                    Response response = new Response
+                    {
+                        Status = StatusCode.Failure,
+                        Error = "Unable to connect to server"
+                    };
 
+                    _sendDone.Set();
+
+                    _registerUserResponse = response;
+
+                    return;
+                }
+                
                 // Wait until server response to register user
                 while (!_userRegisteredDone.WaitOne(0))
                 {
